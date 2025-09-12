@@ -13,7 +13,6 @@
   <header class="site-header">
     <div class="container">
       <h1>Japanese Battleships · Data Archive</h1>
-      <p class="subtitle">(Images and data are placeholders for now)</p>
 
       <nav aria-label="Main navigation" class="top-nav tabs" role="tablist">
         <button class="tab is-active" role="tab" aria-selected="true" data-tab="overview">Overview</button>
@@ -28,92 +27,93 @@
     <section class="container grid-2x2">
 
       <section class="panel section-panel card" data-tab="overview" role="tabpanel">
-        <h2>Overview (Top Section)</h2>
+        <h2>Overview</h2>
         <p>
-          This page serves as a structured archive of key data about Japanese battleships
-          (main guns, displacement, armor, speed, etc.) for easy comparison and reference.
-          This is currently a skeleton version with placeholder content.
+          Japanese battleships progressed from early dreadnoughts to the immense Yamato class, noted for 18.1-inch guns, pagoda masts, strong armor, and excellent optical fire control.
+          Despite modernization, fuel shortages, weak radar, and overwhelming Allied air power curtailed their impact—culminating in late-war hybrids like Ise and Hyūga.
         </p>
         <details class="details">
           <summary>Terminology / Design Notes</summary>
           <ul>
             <li><strong>Main gun caliber</strong>: Diameter of main gun barrels (mm).</li>
             <li><strong>Standard displacement</strong>: Weight of the ship under standard load (tons).</li>
-            <li><strong>Armor thickness</strong>: Maximum thickness of belt/deck armor (mm).</li>
+            <li><strong>Built year</strong>: when the battleship was built.</li>
             <li><strong>Top speed</strong>: Maximum design speed (knots).</li>
           </ul>
         </details>
       </section>
 
       <article class="panel article-panel card" data-tab="overview" role="tabpanel">
-        <h3>Data Notes (Bottom Article)</h3>
-        <p>Fields: main gun, displacement, armor, top speed, years in service…</p>
+        <h3>Brief description</h3>
+        <p>
+            Japanese battleships evolved from modest pre-dreadnoughts to some of the most formidable capital ships ever built.
+            In the 1930s they underwent heavy modernizations—distinctive “pagoda” masts, improved armor schemes, better engines, and superb optical fire control.
+            The fleet ranged from early dreadnoughts like Kawachi to fast battleships such as Kongō and classics like Fusō, Ise, and Nagato.
+            The pinnacle was the Yamato class, mounting 18.1-inch guns—the largest ever on a warship.
+            Japan emphasized long-range gunnery and night fighting, but lagged in radar and air protection; fuel shortages and U.S. carrier air power blunted their effectiveness.
+            After 1943, Ise and Hyūga were converted to hybrid carrier-battleships, symbolizing a desperate shift toward air warfare.
+        </p>
       </article>
 
-      <form class="panel form-panel card ship-form" data-tab="yamato" role="tabpanel" hidden>
-        <fieldset>
-          <legend>Yamato Class — Preset Data</legend>
-          <div class="form-grid">
-            <div class="cell header name">Name</div>
-            <div class="cell header">Main Gun (mm)</div>
-            <div class="cell header"># of Guns</div>
-            <div class="cell header">Displacement (t)</div>
-            <div class="cell header">Top Speed (kn)</div>
-            <div class="cell header">Year Built</div>
+      <section class="panel table-panel card" data-tab="yamato" role="tabpanel" hidden>
+        <h2>Yamato Class — Specs</h2>
+        <div class="table-wrap">
+          <table aria-describedby="yamato-desc">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Main Gun (mm)</th>
+                <th scope="col"># of Guns</th>
+                <th scope="col">Displacement (t)</th>
+                <th scope="col">Top Speed (kn)</th>
+                <th scope="col">Year Built</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Yamato</th>
+                <td>460</td><td>3 * 3</td><td>72800</td><td>27</td><td>1941</td>
+              </tr>
+              <tr>
+                <th scope="row">Musashi</th>
+                <td>460</td><td>3 * 3</td><td>72800</td><td>27</td><td>1942</td>
+              </tr>
+              <tr>
+                <th scope="row">Shinano</th>
+                <td>None</td><td>None</td><td>72890</td><td>27</td><td>1944</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
-            <div class="cell name">
-              <input type="text" value="Yamato" readonly />
-            </div>
-            <div class="cell"><input type="text" value="—" readonly /></div>
-            <div class="cell"><input type="text" value="—" readonly /></div>
-            <div class="cell"><input type="text" value="—" readonly /></div>
-            <div class="cell"><input type="text" value="—" readonly /></div>
-            <div class="cell"><input type="text" value="—" readonly /></div>
-
-            <!-- Row: Musashi -->
-            <div class="cell name">
-              <input type="text" value="Musashi" readonly />
-            </div>
-            <div class="cell"><input type="text" value="—" readonly /></div>
-            <div class="cell"><input type="text" value="—" readonly /></div>
-            <div class="cell"><input type="text" value="—" readonly /></div>
-            <div class="cell"><input type="text" value="—" readonly /></div>
-            <div class="cell"><input type="text" value="—" readonly /></div>
-          </div>
-        </fieldset>
-      </form>
-
-      <form class="panel form-panel card ship-form" data-tab="nagato" role="tabpanel" hidden>
-        <fieldset>
-          <legend>Nagato Class — Preset Data</legend>
-          <div class="form-grid">
-            <div class="cell header name">Name</div>
-            <div class="cell header">Main Gun (mm)</div>
-            <div class="cell header"># of Guns</div>
-            <div class="cell header">Displacement (t)</div>
-            <div class="cell header">Top Speed (kn)</div>
-            <div class="cell header">Year Built</div>
-
-            <div class="cell name">
-              <input type="text" value="Nagato" readonly />
-            </div>
-            <div class="cell"><input type="text" value="—" readonly /></div>
-            <div class="cell"><input type="text" value="—" readonly /></div>
-            <div class="cell"><input type="text" value="—" readonly /></div>
-            <div class="cell"><input type="text" value="—" readonly /></div>
-            <div class="cell"><input type="text" value="—" readonly /></div>
-
-            <div class="cell name">
-              <input type="text" value="Mutsu" readonly />
-            </div>
-            <div class="cell"><input type="text" value="—" readonly /></div>
-            <div class="cell"><input type="text" value="—" readonly /></div>
-            <div class="cell"><input type="text" value="—" readonly /></div>
-            <div class="cell"><input type="text" value="—" readonly /></div>
-            <div class="cell"><input type="text" value="—" readonly /></div>
-          </div>
-        </fieldset>
-      </form>
+      <section class="panel table-panel card" data-tab="nagato" role="tabpanel" hidden>
+        <h2>Nagato Class — Specs</h2>
+        <div class="table-wrap">
+          <table aria-describedby="nagato-desc">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Main Gun (mm)</th>
+                <th scope="col"># of Guns</th>
+                <th scope="col">Displacement (t)</th>
+                <th scope="col">Top Speed (kn)</th>
+                <th scope="col">Year Built</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Nagato</th>
+                <td>410</td><td>4 * 2</td><td>39000</td><td>26.5</td><td>1920</td>
+              </tr>
+              <tr>
+                <th scope="row">Mutsu</th>
+                <td>410</td><td>4 * 2</td><td>39000</td><td>26.5</td><td>1921</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
       <form class="panel form-panel card login-form" data-tab="login" role="tabpanel" hidden>
         <fieldset>
@@ -141,28 +141,27 @@
           <div class="form-actions">
             <button type="button" class="primary-btn" id="login-btn">Login</button>
           </div>
-          <p class="muted-note">Demo only: clicking “Login” will show an alert with your inputs.</p>
         </fieldset>
       </form>
 
       <aside class="panel sidebar card" data-tab="overview" role="tabpanel" aria-label="Sidebar">
         <h3>Related Resources</h3>
         <ul>
-          <li><a href="#" target="_blank" rel="noopener">General references (placeholder)</a></li>
+          <li><a href="https://en.wikipedia.org/wiki/List_of_battleships_of_Japan" target="_blank" rel="noopener">wikipedia</a></li>
         </ul>
       </aside>
 
       <aside class="panel sidebar card" data-tab="yamato" role="tabpanel" aria-label="Sidebar" hidden>
         <h3>Yamato Class — Resources</h3>
         <ul>
-          <li><a href="#" target="_blank" rel="noopener">Yamato-class references (placeholder)</a></li>
+          <li><a href="https://en.wikipedia.org/wiki/Yamato-class_battleship" target="_blank" rel="noopener">wikipedia</a></li>
         </ul>
       </aside>
 
       <aside class="panel sidebar card" data-tab="nagato" role="tabpanel" aria-label="Sidebar" hidden>
         <h3>Nagato Class — Resources</h3>
         <ul>
-          <li><a href="#" target="_blank" rel="noopener">Nagato-class references (placeholder)</a></li>
+          <li><a href="https://en.wikipedia.org/wiki/Nagato-class_battleship" target="_blank" rel="noopener">wikipedia</a></li>
         </ul>
       </aside>
 
@@ -177,16 +176,16 @@
         <h2>Image Gallery</h2>
         <div class="gallery-grid">
           <figure>
-            <img src="assets/gallery-1.jpg" alt="Battleship A" />
-            <figcaption>Battleship A</figcaption>
+            <img src="assets/Yamato.jpg" alt="Battleship A" />
+            <figcaption>Yamato</figcaption>
           </figure>
           <figure>
-            <img src="assets/gallery-2.jpg" alt="Battleship B" />
-            <figcaption>Battleship B</figcaption>
+            <img src="assets/Shinano.jpg" alt="Battleship B" />
+            <figcaption>Shinano</figcaption>
           </figure>
           <figure>
-            <img src="assets/gallery-3.jpg" alt="Battleship C" />
-            <figcaption>Battleship C</figcaption>
+            <img src="assets/Yukikaze.jpg" alt="Battleship C" />
+            <figcaption>Yukikaze</figcaption>
           </figure>
         </div>
       </section>
@@ -202,7 +201,7 @@
       <section class="panel card fullrow" data-tab="overview" role="tabpanel">
         <h2>Battleship Video</h2>
         <video controls width="100%" preload="metadata" poster="assets/poster.jpg">
-          <source src="assets/battleship.mp4" type="video/mp4" />
+          <source src="assets/yamato.mp4" type="video/mp4" />
           Your browser does not support video.
         </video>
       </section>
@@ -212,11 +211,11 @@
 
   <footer class="site-footer">
     <div class="container footer-grid">
-      <p>© <span id="year"></span> Japanese Battleship Data Archive (Assignment Skeleton)</p>
+      <p>© <span id="year"></span> Jiachen Wu's Battleship Information Library</p>
       <p>
         Contact:
-        <a href="mailto:battleship@archive.org">battleship@archive.org</a> ·
-        <a href="tel:+1-555-0101">+1-555-0101</a>
+        <a href="mailto:battleship@archive.org">wu.jiachen1@northeastern.edu</a> ·
+        <a href="tel:+1-555-0101">+1-617-319-9160</a>
       </p>
     </div>
   </footer>
