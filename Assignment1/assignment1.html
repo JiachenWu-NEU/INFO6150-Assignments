@@ -3,25 +3,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Battleships</title>
+    <title>Japanese Battleships</title>
 
     <link rel="icon" href="assets/favicon.ico" />
     <link rel="stylesheet" href="styles.css" />
     <meta name="description" content="Battleships' info" />
 </head>
 <body>
-    <header class="site-header">
+  <header class="site-header">
     <div class="container">
-        <h1>Battleships</h1>
-        <p class="subtitle">（图片与具体数据暂为空位，后续补齐）</p>
+      <h1>Japanese Battleships · Data Archive</h1>
+      <p class="subtitle">(Images and data are placeholders for now)</p>
 
-        <nav aria-label="主导航" class="top-nav">
-          <a href="#overview">概览</a>
-          <a href="#specs">数值总表</a>
-          <a href="#submission">提交与联系</a>
-          <a href="#media">多媒体</a>
-        </nav>
+      <nav aria-label="Main navigation" class="top-nav tabs" role="tablist">
+        <button class="tab is-active" role="tab" aria-selected="true" data-tab="overview">Overview</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="yamato">Yamato Class</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="nagato">Nagato Class</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="login">Login</button>
+      </nav>
     </div>
   </header>
+
+  <main>
+    <section class="container grid-2x2">
+
+      <section class="panel section-panel card" data-tab="overview" role="tabpanel">
+        <h2>Overview (Top Section)</h2>
+        <p>
+          This page serves as a structured archive of key data about Japanese battleships
+          (main guns, displacement, armor, speed, etc.) for easy comparison and reference.
+          This is currently a skeleton version with placeholder content.
+        </p>
+        <details class="details">
+          <summary>Terminology / Design Notes</summary>
+          <ul>
+            <li><strong>Main gun caliber</strong>: Diameter of main gun barrels (mm).</li>
+            <li><strong>Standard displacement</strong>: Weight of the ship under standard load (tons).</li>
+            <li><strong>Armor thickness</strong>: Maximum thickness of belt/deck armor (mm).</li>
+            <li><strong>Top speed</strong>: Maximum design speed (knots).</li>
+          </ul>
+        </details>
+      </section>
+
+      <article class="panel article-panel card" data-tab="overview" role="tabpanel">
+        <h3>Data Notes (Bottom Article)</h3>
+        <p>Fields: main gun, displacement, armor, top speed, years in service…</p>
+      </article>
+
+      <form class="panel form-panel card ship-form" data-tab="yamato" role="tabpanel" hidden>
+        <fieldset>
+          <legend>Yamato Class — Preset Data</legend>
+          <div class="form-grid">
+            <div class="cell header name">Name</div>
+            <div class="cell header">Main Gun (mm)</div>
+            <div class="cell header"># of Guns</div>
+            <div class="cell header">Displacement (t)</div>
+            <div class="cell header">Top Speed (kn)</div>
+            <div class="cell header">Year Built</div>
+
+            <div class="cell name">
+              <input type="text" value="Yamato" readonly />
+            </div>
+            <div class="cell"><input type="text" value="—" readonly /></div>
+            <div class="cell"><input type="text" value="—" readonly /></div>
+            <div class="cell"><input type="text" value="—" readonly /></div>
+            <div class="cell"><input type="text" value="—" readonly /></div>
+            <div class="cell"><input type="text" value="—" readonly /></div>
+
+            <!-- Row: Musashi -->
+            <div class="cell name">
+              <input type="text" value="Musashi" readonly />
+            </div>
+            <div class="cell"><input type="text" value="—" readonly /></div>
+            <div class="cell"><input type="text" value="—" readonly /></div>
+            <div class="cell"><input type="text" value="—" readonly /></div>
+            <div class="cell"><input type="text" value="—" readonly /></div>
+            <div class="cell"><input type="text" value="—" readonly /></div>
+          </div>
+        </fieldset>
+      </form>
+
+      <form class="panel form-panel card ship-form" data-tab="nagato" role="tabpanel" hidden>
+        <fieldset>
+          <legend>Nagato Class — Preset Data</legend>
+          <div class="form-grid">
+            <div class="cell header name">Name</div>
+            <div class="cell header">Main Gun (mm)</div>
+            <div class="cell header"># of Guns</div>
+            <div class="cell header">Displacement (t)</div>
+            <div class="cell header">Top Speed (kn)</div>
+            <div class="cell header">Year Built</div>
+
+            <div class="cell name">
+              <input type="text" value="Nagato" readonly />
+            </div>
+            <div class="cell"><input type="text" value="—" readonly /></div>
+            <div class="cell"><input type="text" value="—" readonly /></div>
+            <div class="cell"><input type="text" value="—" readonly /></div>
+            <div class="cell"><input type="text" value="—" readonly /></div>
+            <div class="cell"><input type="text" value="—" readonly /></div>
+
+            <div class="cell name">
+              <input type="text" value="Mutsu" readonly />
+            </div>
+            <div class="cell"><input type="text" value="—" readonly /></div>
+            <div class="cell"><input type="text" value="—" readonly /></div>
+            <div class="cell"><input type="text" value="—" readonly /></div>
+            <div class="cell"><input type="text" value="—" readonly /></div>
+            <div class="cell"><input type="text" value="—" readonly /></div>
+          </div>
+        </fieldset>
+      </form>
+
+      <form class="panel form-panel card login-form" data-tab="login" role="tabpanel" hidden>
+        <fieldset>
+          <legend>Login (Demo Only)</legend>
+          <div class="login-grid">
+            <label for="login-username" class="login-label">Username</label>
+            <input id="login-username" type="text" placeholder="Your name" />
+
+            <label for="login-email" class="login-label">Email</label>
+            <input id="login-email" type="email" placeholder="you@example.com" />
+
+            <label for="login-password" class="login-label">Password</label>
+            <input id="login-password" type="password" placeholder="••••••••" />
+
+            <label for="login-gender" class="login-label">Gender</label>
+            <input id="login-gender" type="text" list="gender-list" placeholder="Select or type" />
+            <datalist id="gender-list">
+              <option value="Male"></option>
+              <option value="Female"></option>
+              <option value="Other"></option>
+              <option value="Prefer not to say"></option>
+            </datalist>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="primary-btn" id="login-btn">Login</button>
+          </div>
+          <p class="muted-note">Demo only: clicking “Login” will show an alert with your inputs.</p>
+        </fieldset>
+      </form>
+
+      <aside class="panel sidebar card" data-tab="overview" role="tabpanel" aria-label="Sidebar">
+        <h3>Related Resources</h3>
+        <ul>
+          <li><a href="#" target="_blank" rel="noopener">General references (placeholder)</a></li>
+        </ul>
+      </aside>
+
+      <aside class="panel sidebar card" data-tab="yamato" role="tabpanel" aria-label="Sidebar" hidden>
+        <h3>Yamato Class — Resources</h3>
+        <ul>
+          <li><a href="#" target="_blank" rel="noopener">Yamato-class references (placeholder)</a></li>
+        </ul>
+      </aside>
+
+      <aside class="panel sidebar card" data-tab="nagato" role="tabpanel" aria-label="Sidebar" hidden>
+        <h3>Nagato Class — Resources</h3>
+        <ul>
+          <li><a href="#" target="_blank" rel="noopener">Nagato-class references (placeholder)</a></li>
+        </ul>
+      </aside>
+
+      <aside class="panel sidebar card" data-tab="login" role="tabpanel" aria-label="Sidebar" hidden>
+        <h3>Login Tips</h3>
+        <ul>
+          <li>This is a demo only. No real authentication.</li>
+        </ul>
+      </aside>
+
+      <section class="panel card fullrow" data-tab="overview" role="tabpanel">
+        <h2>Image Gallery</h2>
+        <div class="gallery-grid">
+          <figure>
+            <img src="assets/gallery-1.jpg" alt="Battleship A" />
+            <figcaption>Battleship A</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/gallery-2.jpg" alt="Battleship B" />
+            <figcaption>Battleship B</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/gallery-3.jpg" alt="Battleship C" />
+            <figcaption>Battleship C</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="panel card fullrow" data-tab="overview" role="tabpanel">
+        <h2>Sound of gun shooting</h2>
+        <audio controls>
+          <source src="assets/cannon.mp3" type="audio/mpeg" />
+          Your browser does not support audio.
+        </audio>
+      </section>
+
+      <section class="panel card fullrow" data-tab="overview" role="tabpanel">
+        <h2>Battleship Video</h2>
+        <video controls width="100%" preload="metadata" poster="assets/poster.jpg">
+          <source src="assets/battleship.mp4" type="video/mp4" />
+          Your browser does not support video.
+        </video>
+      </section>
+
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <p>© <span id="year"></span> Japanese Battleship Data Archive (Assignment Skeleton)</p>
+      <p>
+        Contact:
+        <a href="mailto:battleship@archive.org">battleship@archive.org</a> ·
+        <a href="tel:+1-555-0101">+1-555-0101</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // tabs
+    (function () {
+      const tabs = document.querySelectorAll('.tabs .tab');
+      const panels = document.querySelectorAll('.panel');
+
+      function activateTab(tabName) {
+        tabs.forEach(btn => {
+          const active = btn.dataset.tab === tabName;
+          btn.classList.toggle('is-active', active);
+          btn.setAttribute('aria-selected', String(active));
+        });
+
+        panels.forEach(p => {
+          if (p.dataset.tab === tabName) {
+            p.removeAttribute('hidden');
+          } else {
+            p.setAttribute('hidden', '');
+          }
+        });
+      }
+
+      tabs.forEach(btn => {
+        btn.addEventListener('click', () => activateTab(btn.dataset.tab));
+        btn.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            activateTab(btn.dataset.tab);
+          }
+        });
+      });
+
+      const current = document.querySelector('.tabs .tab.is-active')?.dataset.tab || 'overview';
+      activateTab(current);
+    })();
+
+    // login alert
+    (function () {
+      const btn = document.getElementById('login-btn');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        const u = document.getElementById('login-username')?.value || '';
+        const e = document.getElementById('login-email')?.value || '';
+        const p = document.getElementById('login-password')?.value || '';
+        const g = document.getElementById('login-gender')?.value || '';
+
+        alert(
+          'Username: ' + u + '\n' +
+          'Email: ' + e + '\n' +
+          'Password: ' + p + '\n' +
+          'Gender: ' + g
+        );
+      });
+    })();
+  </script>
 </body>
 </html>
