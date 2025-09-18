@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Professional Portfolio • Your Name</title>
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%23005cff'/%3E%3Ctext x='50' y='62' font-size='60' text-anchor='middle' fill='white' font-family='Arial,Helvetica,sans-serif'%3EP%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="Professional portfolio website showcasing skills, projects, testimonials, and a contact form." />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <img class="avatar" src="https://picsum.photos/seed/profile/96" alt="Profile avatar placeholder" />
+      <div>
+        <h1>Your Name</h1>
+        <p class="tagline">Software Engineer • Full‑Stack • Problem Solver</p>
+      </div>
+    </div>
+    <button class="menu-toggle" aria-controls="site-nav" aria-expanded="false">Menu</button>
+  </header>
+
+  <nav id="site-nav" class="site-nav" aria-label="Main Navigation">
+    <ul>
+      <li><a class="active" href="#home">Home</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#resume">Resume</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main 2-column area (LEFT: section + article stacked; RIGHT: aside) -->
+  <main id="home" class="content-shell">
+    <div class="left-column">
+      <section class="about section-card" aria-labelledby="about-title">
+        <h2 id="about-title">About Me</h2>
+        <p>
+          I build reliable, scalable web apps with clean UX and strong
+          fundamentals. I enjoy TypeScript, React, Swift, Java, and Python, and
+          I care deeply about testing, performance, and accessibility.
+        </p>
+        <h3 id="projects" class="mt">Highlighted Projects</h3>
+        <table class="skills-table" summary="Selected projects with roles and tech stack">
+          <caption class="sr-only">Projects table</caption>
+          <thead>
+            <tr>
+              <th scope="col">Project</th>
+              <th scope="col">Role</th>
+              <th scope="col">Tech</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>IoT Anomaly Dashboard</td>
+              <td>Full‑Stack Dev</td>
+              <td>Spring Boot, EMQX, React</td>
+            </tr>
+            <tr>
+              <td>iOS Travel Planner</td>
+              <td>iOS Engineer</td>
+              <td>SwiftUI, CoreData</td>
+            </tr>
+            <tr>
+              <td>Snake AI Server</td>
+              <td>Backend Dev</td>
+              <td>Python, Sockets</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <article class="latest-post section-card" aria-labelledby="post-title">
+        <h2 id="post-title">Latest Update</h2>
+        <p>
+          Recently improved CI for a microservice repo, cutting build times by
+          35% with smarter caching and parallel jobs. Next up: add visual
+          regression tests.
+        </p>
+        <a class="btn" href="#resume" role="button">View Resume</a>
+      </article>
+    </div>
+
+    <aside class="sidebar section-card" aria-labelledby="contact-title">
+      <h2 id="contact" class="mb">Contact Me</h2>
+      <form class="contact-form" action="#" method="post">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" placeholder="Your full name" required />
+
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="you@example.com" required />
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" placeholder="How can I help?" required></textarea>
+
+        <button class="btn" type="submit">Send Message</button>
+      </form>
+
+      <div class="skills mt">
+        <h3>Key Skills</h3>
+        <ul class="skills-list">
+          <li>Java • Spring</li>
+          <li>JavaScript/TypeScript • React</li>
+          <li>iOS • Swift/SwiftUI</li>
+          <li>Python • APIs • Testing</li>
+        </ul>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Responsive UI Component 1: Testimonials -->
+  <section class="testimonials" aria-labelledby="testimonials-title">
+    <h2 id="testimonials-title">Testimonials</h2>
+    <div class="testimonials-row">
+      <figure class="testimonial-card">
+        <blockquote>
+          “Delivers clean, maintainable code and clarifies trade‑offs with data.”
+        </blockquote>
+        <figcaption>— Alex R., Tech Lead</figcaption>
+      </figure>
+      <figure class="testimonial-card">
+        <blockquote>
+          “Shipped our MVP 2 weeks early, with great UX and docs.”
+        </blockquote>
+        <figcaption>— Priya S., PM</figcaption>
+      </figure>
+      <figure class="testimonial-card">
+        <blockquote>
+          “Thoughtful reviews and strong testing mindset. A pleasure to pair with.”
+        </blockquote>
+        <figcaption>— Marco D., Engineer</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Responsive UI Component 2: Image Gallery -->
+  <section class="gallery" aria-labelledby="gallery-title">
+    <h2 id="gallery-title">Image Gallery</h2>
+    <div class="gallery-grid">
+      <a href="https://picsum.photos/seed/1/1200/800" class="gallery-item">
+        <img src="https://picsum.photos/seed/1/400/260" alt="Project screenshot 1" />
+        <span class="caption">Dashboard</span>
+      </a>
+      <a href="https://picsum.photos/seed/2/1200/800" class="gallery-item">
+        <img src="https://picsum.photos/seed/2/400/260" alt="Project screenshot 2" />
+        <span class="caption">Mobile App</span>
+      </a>
+      <a href="https://picsum.photos/seed/3/1200/800" class="gallery-item">
+        <img src="https://picsum.photos/seed/3/400/260" alt="Project screenshot 3" />
+        <span class="caption">API Tools</span>
+      </a>
+      <a href="https://picsum.photos/seed/4/1200/800" class="gallery-item">
+        <img src="https://picsum.photos/seed/4/400/260" alt="Project screenshot 4" />
+        <span class="caption">Testing</span>
+      </a>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Your Name. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Simple progressive enhancement: mobile menu + current year
+    const btn = document.querySelector('.menu-toggle');
+    const nav = document.getElementById('site-nav');
+    btn?.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      nav.classList.toggle('open');
+    });
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
