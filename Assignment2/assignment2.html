@@ -14,8 +14,8 @@
     <div class="brand">
       <img class="avatar" src="https://picsum.photos/seed/profile/96" alt="Profile avatar placeholder" />
       <div>
-        <h1>Your Name</h1>
-        <p class="tagline">Software Engineer • Full‑Stack • Problem Solver</p>
+        <h1>Jiachen Wu</h1>
+        <p class="tagline">Software Engineer • Full‑Stack</p>
       </div>
     </div>
     <button class="menu-toggle" aria-controls="site-nav" aria-expanded="false">Menu</button>
@@ -72,11 +72,11 @@
       <article id="resume" class="latest-post section-card" aria-labelledby="post-title">
         <h2 id="post-title">Latest Update</h2>
         <p>
-          Recently improved CI for a microservice repo, cutting build times by
-          35% with smarter caching and parallel jobs. Next up: add visual
-          regression tests.
+          Recently learning training artifitial intelligence. In the future, I will keep focusing
+          on software development, but more on DevOps. Compared with just developing, DevOps is more
+          challenging and also a necessary part for developing.
         </p>
-        <a class="btn" href="#resume" role="button">View Resume</a>
+        <a class="btn" href="https://www.linkedin.com/in/jiachen-wu-773954334/" role="button">View Resume</a>
       </article>
     </div>
 
@@ -115,19 +115,19 @@
         <blockquote>
           “Delivers clean, maintainable code and clarifies trade‑offs with data.”
         </blockquote>
-        <figcaption>— Alex R., Tech Lead</figcaption>
+        <figcaption>— Alex R., Product manager from META</figcaption>
       </figure>
       <figure class="testimonial-card">
         <blockquote>
-          “Shipped our MVP 2 weeks early, with great UX and docs.”
+          “Great projects with great UX and docs.”
         </blockquote>
-        <figcaption>— Priya S., PM</figcaption>
+        <figcaption>— Priya S., Developer in Amazon</figcaption>
       </figure>
       <figure class="testimonial-card">
         <blockquote>
           “Thoughtful reviews and strong testing mindset. A pleasure to pair with.”
         </blockquote>
-        <figcaption>— Marco D., Engineer</figcaption>
+        <figcaption>— Marco D., Software Engineer</figcaption>
       </figure>
     </div>
   </section>
@@ -156,7 +156,7 @@
   </section>
 
   <footer class="site-footer">
-    <p>&copy; <span id="year"></span> Your Name. All rights reserved.</p>
+    <p>&copy; <span id="year"></span> Jiachen Wu. All rights reserved.</p>
   </footer>
 
   <script>
@@ -169,6 +169,20 @@
       nav.classList.toggle('open');
     });
     document.getElementById('year').textContent = new Date().getFullYear();
+
+      const form = document.querySelector('.contact-form');
+
+    form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    alert(`Name: ${name}\nEmail: ${email}\nMessage: ${message}`);
+
+    form.reset();
+  });
   </script>
 </body>
 </html>

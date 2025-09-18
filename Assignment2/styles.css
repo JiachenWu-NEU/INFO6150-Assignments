@@ -105,7 +105,7 @@ img{ max-width:100%; display:block; }
   transition: transform .2s ease, box-shadow .2s ease;
 }
 .gallery-item img{ width:100%; height:220px; object-fit:cover; display:block; }
-.gallery-item .caption{ position:absolute; left:.6rem; bottom:.6rem; background:rgba(0,0,0,.45); padding:.3rem .5rem; border-radius:8px; font-size:.85rem; }
+.gallery-item .caption{ position:absolute; left:.6rem; bottom:.6rem; background:rgba(0,0,0,.45); padding:.3rem .5rem; border-radius:8px; font-size:.85rem; color: white; }
 .gallery-item:hover{ transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,.35); }
 
 /* Footer */
