@@ -26,7 +26,6 @@
       <li><a class="active" href="#home">Home</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#resume">Resume</a></li>
-      <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
 
@@ -34,14 +33,14 @@
   <main id="home" class="content-shell">
     <div class="left-column">
       <section class="about section-card" aria-labelledby="about-title">
-        <h2 id="about-title">About Me</h2>
+        <h2>About Me</h2>
         <p>
           I build reliable, scalable web apps with clean UX and strong
           fundamentals. I enjoy TypeScript, React, Swift, Java, and Python, and
           I care deeply about testing, performance, and accessibility.
         </p>
-        <h3 id="projects" class="mt">Highlighted Projects</h3>
-        <table class="skills-table" summary="Selected projects with roles and tech stack">
+        <h3 class="mt">Highlighted Projects</h3>
+        <table id="projects" class="skills-table" summary="Selected projects with roles and tech stack">
           <caption class="sr-only">Projects table</caption>
           <thead>
             <tr>
@@ -70,7 +69,7 @@
         </table>
       </section>
 
-      <article class="latest-post section-card" aria-labelledby="post-title">
+      <article id="resume" class="latest-post section-card" aria-labelledby="post-title">
         <h2 id="post-title">Latest Update</h2>
         <p>
           Recently improved CI for a microservice repo, cutting build times by
