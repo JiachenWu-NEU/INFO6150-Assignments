@@ -18,8 +18,22 @@ const editOkBtn = document.getElementById('editOkBtn');
 
 let currentEditingStudent = null;
 
+function normalizeArrows() {
+  const rows = Array.from(tbody.querySelectorAll('tr.row'));
+  for (const tr of rows) {
+    const details = tr.nextElementSibling && tr.nextElementSibling.classList.contains('details-row')
+      ? tr.nextElementSibling : null;
+    if (details) {
+        details.hidden = true;
+    }
+    const btn = tr.querySelector('.expand-btn');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   ['1','2','3'].forEach(num => addStudentRow(parseInt(num, 10), false));
+  normalizeArrows();
   updateSummary();
 });
 
@@ -42,6 +56,7 @@ function addStudentRow(num, showAlertOnSuccess = true) {
     tdExpand.className = 'col-expand';
     const expandBtn = document.createElement('button');
     expandBtn.className = 'icon-btn expand-btn';
+    expandBtn.setAttribute('aria-expanded', 'false');
     expandBtn.innerHTML = greenArrowSVG();
     expandBtn.addEventListener('click', () => toggleDetails(tr, detailsTr, expandBtn));
     tdExpand.appendChild(expandBtn);
@@ -159,10 +174,10 @@ function updateSubmitState() {
 }
 
 function toggleDetails(mainTr, detailsTr, expandBtn) {
-  const svg = expandBtn.querySelector('.arrow');
-  const hidden = detailsTr.hidden;
-  detailsTr.hidden = !hidden;
-  svg.classList.toggle('expanded', !hidden);
+  const isOpen = expandBtn.getAttribute('aria-expanded') === 'true';
+  const nextState = !isOpen;
+  expandBtn.setAttribute('aria-expanded', String(nextState));
+  detailsTr.hidden = !nextState;
 }
 
 function deleteRow(mainTr) {

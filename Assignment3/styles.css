@@ -70,8 +70,8 @@ table.students tfoot td { padding: .7rem 1rem; color: var(--muted); }
 .icon-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,.08); }
 .icon-btn svg { width: 18px; height: 18px; }
 
-.arrow { transform: rotate(0deg); transition: transform .2s ease; }
-.arrow.expanded { transform: rotate(90deg); } /* 展开时转向 */
+.expand-btn .arrow { transform: rotate(0deg); transition: transform .2s ease; }
+.expand-btn[aria-expanded="true"] .arrow { transform: rotate(90deg); }
 
 .btn-edit { color: #111; }
 .btn-delete { color: var(--danger); border-color: #fecaca; background: #fff5f5; }
