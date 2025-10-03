@@ -166,6 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
     submitBtn.disabled = !allOk;
     return allOk;
   }
+  window.validateAll = validateAll;
 
   titleRadios.forEach(r => r.addEventListener('change', validateAll));
   firstName.addEventListener('input', () => { validateName(firstName, 'First name'); validateAll(); });
@@ -174,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
   phone.addEventListener('input',     () => { formatPhoneOnInput(); validatePhone(); validateAll(); });
   zipcode.addEventListener('input',   () => { validateZip();     validateAll(); });
   hearChecks.forEach(c => c.addEventListener('change', () => { validateHear(); validateAll(); }));
-  comments.addEventListener('input',  () => { validateComments(); validateAll(); });
+  comments.addEventListener('input',  () => { validateComments(); window.validateAll?.(); });
 
   validateAll();
 
@@ -315,15 +316,65 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof window.validateAll === 'function') window.validateAll();
   });
 
-  (function wrapValidateAll(){
-    const original = window.validateAll;
-    window.validateAll = function(){
-      const baseOK = typeof original === 'function' ? !!original() : true;
-      const topicOK = validateTopicDetail();
-      if (submitBtn) submitBtn.disabled = !(baseOK && topicOK);
-      return baseOK && topicOK;
-    };
-  })();
+(function wrapValidateAllHybrid(){
+  const form = document.querySelector('form');
+  const submitBtn = form?.querySelector('input[type="Submit"]');
+  const original = window.validateAll;
+
+  function topicOK() {
+    const cb  = document.getElementById('topicCheckbox');
+    const inp = document.getElementById('topicDetail');
+
+    if (!cb || !cb.checked) return true;
+
+    if (!inp) return false;
+
+    const ok = inp.value.trim() !== '';
+    let err = inp.nextElementSibling && inp.nextElementSibling.classList?.contains('error')
+      ? inp.nextElementSibling : null;
+    if (!err) {
+      err = document.createElement('span');
+      err.className = 'error';
+      err.style.marginLeft = '12px';
+      err.style.color = 'crimson';
+      err.style.fontSize = '0.9rem';
+      inp.parentNode.insertBefore(err, inp.nextSibling);
+    }
+    err.textContent = ok ? '' : 'This field is required.';
+    return ok;
+  }
+
+  window.validateAll = function () {
+    let baseOK = true;
+    if (typeof original === 'function') {
+      original();
+      baseOK = submitBtn ? !submitBtn.disabled : true;
+    }
+
+    const tOK = topicOK();
+
+    const allOK = baseOK && tOK;
+    if (submitBtn) submitBtn.disabled = !allOK;
+
+    return allOK;
+  };
+})();
+
+  document.getElementById('topic')?.addEventListener('change', () => {
+    window.validateAll?.();
+  });
+  
+  document.getElementById('dynamic-area')?.addEventListener('change', (e) => {
+    if (e.target && e.target.id === 'topicCheckbox') {
+      window.validateAll?.();
+    }
+  });
+  
+  document.getElementById('dynamic-area')?.addEventListener('input', (e) => {
+    if (e.target && e.target.id === 'topicDetail') {
+      window.validateAll?.();
+    }
+  });
 
   const resetBtn = form.querySelector('input[type="Reset"]');
   resetBtn?.addEventListener('click', () => {
@@ -332,5 +383,114 @@ document.addEventListener('DOMContentLoaded', () => {
       if (typeof window.validateAll === 'function') window.validateAll();
       if (submitBtn) submitBtn.disabled = true;
     }, 0);
+  });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.querySelector('form');
+  const preview = document.getElementById('submission-preview');
+
+  if (!form || !preview) return;
+
+  const labelMap = {
+    delivery: 'Delivery fee',
+    support: 'Support detail',
+    billing: 'Billing detail',
+    products: 'Product detail',
+    other: 'Other detail'
+  };
+
+  function getRadioValue(name) {
+    const node = form.querySelector(`input[name="${name}"]:checked`);
+    return node ? node.value : '';
+  }
+
+  function getCheckboxValues(name) {
+    return [...form.querySelectorAll(`input[name="${name}"]:checked`)].map(i => i.value);
+  }
+
+  function escapeHtml(str) {
+    return String(str ?? '')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  form.addEventListener('submit', (e) => {
+    if (typeof window.validateAll === 'function' && !window.validateAll()) {
+      e.preventDefault();
+      return;
+    }
+
+    e.preventDefault();
+
+    const title = getRadioValue('title');
+    const firstName = document.getElementById('firstName')?.value ?? '';
+    const lastName  = document.getElementById('lastName')?.value ?? '';
+    const email     = document.getElementById('emailId')?.value ?? '';
+    const phone     = document.getElementById('phoneNumber')?.value ?? '';
+    const zipcode   = document.getElementById('zipcode')?.value ?? '';
+    const address   = document.getElementById('address')?.value ?? '';
+    const sources   = getCheckboxValues('source');
+    const comments  = document.getElementById('comments')?.value ?? '';
+
+    const topicSel  = document.getElementById('topic');
+    const topicVal  = topicSel ? topicSel.value : '';
+    const topicText = topicSel && topicSel.selectedIndex >= 0
+      ? topicSel.options[topicSel.selectedIndex].text
+      : '';
+
+    const topicCb   = document.getElementById('topicCheckbox');
+    const topicCbChecked = !!(topicCb && topicCb.checked);
+    const topicDetailEl  = document.getElementById('topicDetail');
+    const topicDetailVal = topicDetailEl ? topicDetailEl.value : '';
+
+    const rows = [];
+
+    rows.push(['Name', title + '. ' + firstName + ' ' + lastName || '—']);
+    rows.push(['Email', email || '—']);
+    rows.push(['Phone', phone || '—']);
+    rows.push(['ZipCode', zipcode || '—']);
+    rows.push(['Address', address || '—']);
+    rows.push(['How did you hear', sources.length ? sources.join(', ') : '—']);
+    rows.push(['Comments', comments || '—']);
+
+    if (topicVal) {
+      rows.push(['Topic', topicText || topicVal]);
+      rows.push([labelMap[topicVal] || 'Details checkbox', topicCbChecked ? 'Enabled' : 'Disabled']);
+      rows.push(['Topic detail', topicDetailVal ? topicDetailVal : '—']);
+    }
+
+    const tableHtml = `
+      <table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse; background:#fff;">
+        <thead>
+          <tr>
+            <th align="left">Field</th>
+            <th align="left">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.map(([k, v]) => `
+            <tr>
+              <td>${escapeHtml(k)}</td>
+              <td>${escapeHtml(v)}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+    preview.innerHTML = tableHtml;
+
+    preview.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    form.reset();
+
+    document.getElementById('dynamic-area')?.replaceChildren();
+
+    form.querySelectorAll('.error').forEach(s => (s.textContent = ''));
+
+    const submitBtn = form.querySelector('input[type="Submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+
+    setTimeout(() => window.validateAll?.(), 0);
   });
 });
