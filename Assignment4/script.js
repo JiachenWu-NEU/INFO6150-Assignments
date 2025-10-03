@@ -12,6 +12,40 @@ document.addEventListener('DOMContentLoaded', () => {
   const hearChecks= [...form.querySelectorAll('input[name="source"]')];
   const comments  = document.getElementById('comments');
 
+  const address = document.getElementById('address');
+  if (address) {
+    const addressMax = parseInt(address.getAttribute('maxlength') || '20', 10);
+  
+    const counter = document.createElement('div');
+    counter.id = 'addressCounter';
+    counter.style.fontSize = '0.85rem';
+    counter.style.color = '#555';
+    counter.style.marginTop = '6px';
+    counter.textContent = `0/${addressMax} characters used`;
+  
+    let insertBefore = address.nextSibling;
+    while (insertBefore && !(insertBefore.nodeType === 1 && insertBefore.tagName === 'BR')) {
+      insertBefore = insertBefore.nextSibling;
+    }
+    if (insertBefore) {
+      address.parentNode.insertBefore(counter, insertBefore);
+    } else {
+      address.parentNode.insertBefore(counter, address.nextSibling);
+    }
+  
+    function updateAddressCounter() {
+      const len = address.value.length;
+      counter.textContent = `${len}/${addressMax} characters used`;
+    }
+  
+    address.addEventListener('input', updateAddressCounter);
+    updateAddressCounter();
+  
+    form.querySelector('input[type="Reset"]')?.addEventListener('click', () => {
+      setTimeout(updateAddressCounter, 0);
+    });
+  }
+
   function ensureErrorSpan(afterNode) {
     let span = afterNode.nextElementSibling && afterNode.nextElementSibling.classList?.contains('error')
       ? afterNode.nextElementSibling
@@ -492,5 +526,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (submitBtn) submitBtn.disabled = true;
 
     setTimeout(() => window.validateAll?.(), 0);
+    const addrEl = document.getElementById('address');
+    const maxLen = parseInt((addrEl && addrEl.getAttribute('maxlength')) || '20', 10);
+    const counterEl = document.getElementById('addressCounter');
+    if (counterEl) {
+      counterEl.textContent = `0/${maxLen} characters used`;
+    }
+
   });
 });
