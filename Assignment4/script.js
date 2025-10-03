@@ -579,9 +579,9 @@ document.addEventListener('DOMContentLoaded', () => {
   btn.addEventListener('click', () => {
     chat.hidden = !chat.hidden;
     if (chat.hidden) {
-      log.replaceChildren();     // 清空所有聊天气泡
-      input.value = '';          // 清空输入框
-      delete log.dataset.greeted; // 如果你之前用过 greeted 标记，顺便清掉
+      log.replaceChildren();
+      input.value = '';
+      delete log.dataset.greeted;
     } else {
       input.focus();
     }
