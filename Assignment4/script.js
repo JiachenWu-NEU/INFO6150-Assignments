@@ -194,3 +194,143 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 0);
   });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.querySelector('form');
+  const submitBtn = form.querySelector('input[type="Submit"]');
+  const topic = document.getElementById('topic');
+  const dyn = document.getElementById('dynamic-area');
+
+  const ensureErrorSpan =
+    window.ensureErrorSpan ||
+    function(afterNode){
+      let span = afterNode.nextElementSibling && afterNode.nextElementSibling.classList?.contains('error')
+        ? afterNode.nextElementSibling
+        : null;
+      if (!span) {
+        span = document.createElement('span');
+        span.className = 'error';
+        span.style.marginLeft = '12px';
+        span.style.color = 'crimson';
+        span.style.fontSize = '0.9rem';
+        afterNode.parentNode.insertBefore(span, afterNode.nextSibling);
+      }
+      return span;
+    };
+
+  const labelMap = {
+    delivery: 'Delivery fee',
+    support: 'Support detail',
+    billing: 'Billing detail',
+    products: 'Product detail',
+    other: 'Other detail'
+  };
+
+  function clearDynamic() {
+    dyn.innerHTML = '';
+  }
+
+  function renderCheckbox(selectedVal) {
+    clearDynamic();
+    if (!selectedVal) return;
+
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.id = 'topicCheckbox';
+    cb.name = 'topicCheckbox';
+
+    const lbl = document.createElement('label');
+    lbl.htmlFor = 'topicCheckbox';
+    lbl.textContent = ` ${labelMap[selectedVal] || 'Details'}`;
+
+    dyn.appendChild(cb);
+    dyn.appendChild(lbl);
+
+    cb.addEventListener('change', () => {
+      if (cb.checked) {
+        renderTextField(selectedVal);
+      } else {
+        removeTextField();
+      }
+      if (typeof window.validateAll === 'function') window.validateAll();
+    });
+  }
+
+  function removeTextField() {
+    const wrap = document.getElementById('topicDetailWrap');
+    if (wrap) wrap.remove();
+  }
+
+  function renderTextField(selectedVal) {
+    removeTextField();
+
+    const wrap = document.createElement('div');
+    wrap.id = 'topicDetailWrap';
+    wrap.style.marginTop = '8px';
+
+    const lbl = document.createElement('label');
+    lbl.htmlFor = 'topicDetail';
+    lbl.textContent = `Details (${labelMap[selectedVal] || 'Details'})*: `;
+
+    const inp = document.createElement('input');
+    inp.type = 'text';
+    inp.id = 'topicDetail';
+    inp.name = 'topicDetail';
+    inp.placeholder = 'Please enter details';
+
+    const err = document.createElement('span');
+    err.className = 'error';
+    err.style.marginLeft = '12px';
+    err.style.color = 'crimson';
+    err.style.fontSize = '0.9rem';
+
+    wrap.appendChild(lbl);
+    wrap.appendChild(inp);
+    wrap.appendChild(err);
+    dyn.appendChild(wrap);
+
+    inp.addEventListener('input', () => {
+      validateTopicDetail();
+      if (typeof window.validateAll === 'function') window.validateAll();
+    });
+  }
+
+  function validateTopicDetail() {
+    const cb = document.getElementById('topicCheckbox');
+    const inp = document.getElementById('topicDetail');
+    if (!cb || !cb.checked) return true;
+
+    if (!inp) return false;
+    const err = ensureErrorSpan(inp);
+    if (inp.value.trim().length === 0) {
+      err.textContent = 'This field is required.';
+      return false;
+    }
+    err.textContent = '';
+    return true;
+  }
+
+  topic?.addEventListener('change', () => {
+    renderCheckbox(topic.value);
+    if (typeof window.validateAll === 'function') window.validateAll();
+  });
+
+  (function wrapValidateAll(){
+    const original = window.validateAll;
+    window.validateAll = function(){
+      const baseOK = typeof original === 'function' ? !!original() : true;
+      const topicOK = validateTopicDetail();
+      if (submitBtn) submitBtn.disabled = !(baseOK && topicOK);
+      return baseOK && topicOK;
+    };
+  })();
+
+  const resetBtn = form.querySelector('input[type="Reset"]');
+  resetBtn?.addEventListener('click', () => {
+    setTimeout(() => {
+      clearDynamic();
+      if (typeof window.validateAll === 'function') window.validateAll();
+      if (submitBtn) submitBtn.disabled = true;
+    }, 0);
+  });
+});
