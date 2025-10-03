@@ -535,3 +535,75 @@ document.addEventListener('DOMContentLoaded', () => {
 
   });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const btn   = document.getElementById('ai-assistant-btn');
+  const chat  = document.getElementById('ai-chat');
+  const close = document.getElementById('ai-chat-close');
+  const log   = document.getElementById('ai-chat-messages');
+  const input = document.getElementById('ai-chat-input');
+  const send  = document.getElementById('ai-chat-send');
+
+  if (!btn || !chat || !close || !log || !input || !send) return;
+
+  const QA = [
+    { keys: ['email','northeastern','domain'], 
+      a: 'You must use your Northeastern email, e.g., student@northeastern.edu.' },
+    { keys: ['phone','format','number','mobile','cell'], 
+      a: 'The phone number must be in the format (XXX) XXX-XXXX (10 digits).' },
+    { keys: ['zip','zipcode','postal'], 
+      a: 'The zip code must be exactly 5 digits.' },
+    { keys: ['required','mandatory','must','need','field'], 
+      a: 'All fields are required except Street Address 2 (optional).' },
+    { keys: ['address 2','street address 2','addr2','address2'], 
+      a: 'Street Address 2 is optional. If left blank, it stays blank in the results table.' }
+  ];
+  const defaultReply = "Sorry, I don’t know that yet. Please check the instructions.";
+
+  function addBubble(text, role){
+    const div = document.createElement('div');
+    div.className = `ai-bubble ${role === 'user' ? 'ai-user' : 'ai-bot'}`;
+    div.textContent = text;
+    log.appendChild(div);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function answer(q){
+    const s = q.toLowerCase();
+    for (const {keys, a} of QA){
+      if (keys.some(k => s.includes(k))) return a;
+    }
+    return defaultReply;
+  }
+
+  btn.addEventListener('click', () => {
+    chat.hidden = !chat.hidden;
+    if (chat.hidden) {
+      log.replaceChildren();     // 清空所有聊天气泡
+      input.value = '';          // 清空输入框
+      delete log.dataset.greeted; // 如果你之前用过 greeted 标记，顺便清掉
+    } else {
+      input.focus();
+    }
+  });
+  close.addEventListener('click', () => {
+    chat.hidden = true;
+    log.replaceChildren();
+    input.value = '';
+    delete log.dataset.greeted; }
+  );
+
+  function doSend(){
+    const q = input.value.trim();
+    if (!q) return;
+    addBubble(q, 'user');
+    addBubble(answer(q), 'bot');
+    input.value = '';
+    input.focus();
+  }
+  send.addEventListener('click', doSend);
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); doSend(); }
+  });
+});
+

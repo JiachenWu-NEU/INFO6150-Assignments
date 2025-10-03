@@ -14,11 +14,46 @@
       main{
           padding: 50px;
       }
+	#ai-assistant-btn{
+	  position: absolute; right: 16px; top: 16px;
+	  padding: 6px 10px; border: 1px solid #333; background:#fff; cursor:pointer;
+	}
+	#ai-chat{
+	  position: fixed; right: 16px; bottom: 16px; width: 300px;
+	  background:#fff; border:1px solid #ccc; border-radius:8px;
+	  box-shadow: 0 8px 24px rgba(0,0,0,.15); display:flex; flex-direction:column;
+	  max-height: 60vh; z-index: 9999;
+	}
+	#ai-chat[hidden] { display: none !important; }
+	.ai-chat-header{
+	  display:flex; justify-content:space-between; align-items:center;
+	  padding:8px 10px; border-bottom:1px solid #eee; background:#f9fafb;
+	}
+	#ai-chat-messages{
+	  padding:10px; overflow:auto; flex:1; font-size:.95rem;
+	}
+	.ai-chat-inputrow{ display:flex; gap:6px; padding:8px; border-top:1px solid #eee; }
+	.ai-bubble{ margin:6px 0; padding:8px 10px; border-radius:10px; line-height:1.4; }
+	.ai-user{ background:#e6f0ff; align-self:flex-end; }
+	.ai-bot{ background:#f1f5f9; }
   </style>
  </head>
  <body>
+<button id="ai-assistant-btn" type="button" title="Need help?">AI Assistant</button>
+
+<div id="ai-chat" hidden>
+  <div class="ai-chat-header">
+    <strong>AI Assistant</strong>
+    <button id="ai-chat-close" type="button" aria-label="Close">✕</button>
+  </div>
+  <div id="ai-chat-messages" aria-live="polite"></div>
+  <div class="ai-chat-inputrow">
+    <input id="ai-chat-input" type="text" placeholder="Ask a question..." />
+    <button id="ai-chat-send" type="button">Send</button>
+  </div>
+</div>
+
  <div id="container">
-	 
 	 <main>
 	 <h2>Feeback</h2>
 	 <h3>Love something? Hate something? Let us know!</h3>
