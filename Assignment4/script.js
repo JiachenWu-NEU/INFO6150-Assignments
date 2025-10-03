@@ -187,16 +187,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const resetBtn = form.querySelector('input[type="Reset"]');
   resetBtn.addEventListener('click', () => {
     setTimeout(() => {
-      phone.value = '';
-      [firstName, lastName, email, zipcode, comments].forEach(el => {
-        const err = ensureErrorSpan(el);
-        err.textContent = '';
-      });
-      const titleErr = ensureErrorSpan(titleAnchor);
-      const hearErr  = ensureErrorSpan(hearAnchor);
-      titleErr.textContent = '';
-      hearErr.textContent  = '';
-      submitBtn.disabled = true;
+        validateAll();
+
+        phone.value = '';
+        submitBtn.disabled = true;
     }, 0);
   });
 });

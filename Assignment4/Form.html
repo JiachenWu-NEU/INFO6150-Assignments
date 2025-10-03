@@ -56,7 +56,21 @@
 			<input type='checkbox' name="source" value="facebook" /> Facebook
             <input type='checkbox' name="source" value="google" /> Google
             <input type='checkbox' name="source" value="yelp" /> Yelp 
-			<br><br> 
+			<br><br>
+			
+			<label for="topic">Topic*:</label>
+			<select id="topic" name="topic">
+			  <option value="" selected disabled>-- Select a topic --</option>
+			  <option value="delivery">Delivery</option>
+			  <option value="support">Support</option>
+			  <option value="billing">Billing</option>
+			  <option value="products">Products</option>
+			  <option value="other">Other</option>
+			</select>
+			<br><br>
+
+			<div id="dynamic-area"></div>
+			<br>
              
 			<label for="comments">Comments*:</label>
 			<textarea name="text" id="comments" placeholder="Your comments" rows="5" cols="25"></textarea>
