@@ -61,16 +61,18 @@ function validatePassword(showMsg=true) {
 
 $(function(){
     $("#email").on("focus", function(){
-        $("#emailError").text(""); $("#formError").text("");
+        $("#emailError").text("");
     });
     $("#password").on("focus", function(){
-        $("#passwordError").text(""); $("#formError").text("");
+        $("#passwordError").text("");
     });
     $("#email").on("keyup blur", function(){
-        validateEmail(true); enableButtonIfValid();
+        validateEmail(true);
+        enableButtonIfValid();
     });
     $("#password").on("keyup blur", function(){
-        validatePassword(true); enableButtonIfValid();
+        validatePassword(true);
+        enableButtonIfValid();
     });
     $("#loginForm").on("submit", function(e){
         e.preventDefault();
@@ -84,7 +86,7 @@ $(function(){
         const password = $("#password").val();
         const match = USERS.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
         if(!match) {
-            $("#formError").text("Invalid email or password");
+            alert("Invalid email or password.");
             $("#loginSuccess").hide();
             return;
         }
@@ -101,7 +103,6 @@ $(function(){
         }catch(err){
             window.sessionStorage.setItem("authSession", JSON.stringify(sessionObj));
         }
-        $("#formError").text("");
         $("#loginSuccess").stop(true,true).hide().slideDown(200).delay(1500).fadeOut(300, function(){
             window.location.href = "calculator.html";
         });

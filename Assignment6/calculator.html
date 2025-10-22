@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculator • Northeastern</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <style>
+    :root{
+      --bg:#f5f7fb;--card:#ffffff;--ink:#0f172a;--muted:#6b7280;--brand:#b5121b;--danger:#b91c1c;--ok:#16a34a;--ring:#94a3b8;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,"Helvetica Neue",Arial,sans-serif; background:var(--bg); color:var(--ink); display:grid; grid-template-rows:auto 1fr;}
+    header{background:var(--card); border-bottom:1px solid #e5e7eb; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px}
+    .brand{font-weight:800; letter-spacing:.2px}
+    .welcome{font-weight:600}
+    .logout{border:0; background:var(--brand); color:#fff; padding:10px 14px; border-radius:10px; font-weight:700; cursor:pointer}
+
+    main{display:grid; place-items:center; padding:24px}
+    .card{width:100%; max-width:640px; background:var(--card); border-radius:16px; padding:24px; box-shadow:0 10px 30px rgba(2,6,23,.08); border:1px solid #e5e7eb}
+    h2{margin:0 0 14px}
+    .grid{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+    .field{display:flex; flex-direction:column}
+    label{font-weight:600; margin-bottom:8px}
+    input[type="text"], input[readonly]{width:100%; padding:12px 14px; border:1px solid #d1d5db; border-radius:10px; font-size:1rem; outline:none; transition:border .15s, box-shadow .15s}
+    input[type="text"]:focus{border-color:var(--ring); box-shadow:0 0 0 3px rgba(148,163,184,.25)}
+    input[readonly]{background:#f9fafb}
+    .error{color:var(--danger); min-height:1.2em; font-size:.9rem; margin-top:6px}
+
+    .ops{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:10px 0 6px}
+    .btn{padding:10px 12px; border:1px solid #d1d5db; background:#fff; border-radius:10px; font-weight:700; cursor:pointer}
+    .btn:active{transform:translateY(1px)}
+
+    .result-row{margin-top:10px}
+
+    /* Responsive */
+    @media (max-width: 720px){
+      .grid{grid-template-columns:1fr}
+      .ops{grid-template-columns:repeat(2,1fr)}
+      header{flex-direction:column; align-items:flex-start}
+    }
+    @media (max-width: 420px){
+      body{grid-template-rows:auto 1fr}
+      .card{padding:18px}
+      .ops{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">Northeastern • Calculator</div>
+    <div class="welcome" id="welcomeText">Welcome!</div>
+    <button id="logoutBtn" class="logout">Logout</button>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Simple Calculator</h2>
+      <div class="grid">
+        <div class="field">
+          <label for="num1">Number 1</label>
+          <input id="num1" type="text" inputmode="decimal" placeholder="e.g. -12.5" />
+          <div id="num1Err" class="error" aria-live="polite"></div>
+        </div>
+        <div class="field">
+          <label for="num2">Number 2</label>
+          <input id="num2" type="text" inputmode="decimal" placeholder="e.g. 3.14" />
+          <div id="num2Err" class="error" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <div class="ops">
+        <button class="btn" data-op="add">Add</button>
+        <button class="btn" data-op="subtract">Subtract</button>
+        <button class="btn" data-op="multiply">Multiply</button>
+        <button class="btn" data-op="divide">Divide</button>
+      </div>
+
+      <div class="grid result-row">
+        <div class="field">
+          <label for="result">Result</label>
+          <input id="result" type="text" readonly />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // ---------- Auth check on load ----------
+    const getSession = () => {
+      try{
+        const local = JSON.parse(localStorage.getItem('authSession')||'null');
+        if(local && local.isLoggedIn) return local;
+      }catch(_){}
+      try{
+        const sess = JSON.parse(sessionStorage.getItem('authSession')||'null');
+        if(sess && sess.isLoggedIn) return sess;
+      }catch(_){}
+      return null;
+    };
+
+    const session = getSession();
+    if(!session){
+      window.location.replace('login.html');
+    }
+
+    // Header welcome text
+    if(session){
+      const username = (session.username || (session.email||'').split('@')[0] || 'User');
+      $('#welcomeText').text(`Welcome, ${username}!`);
+    }
+
+    // ---------- Validation helpers ----------
+    const numberPattern = /^\s*-?(?:\d+|\d*\.\d+)\s*$/; // integers or decimals, optional leading '-'
+    const isValidNumber = v => numberPattern.test(v);
+
+    const showErr = ($el, msg) => $el.text(msg);
+    const clearErr = ($el) => $el.text('');
+
+    const readAndValidateInputs = () => {
+      const $n1 = $('#num1');
+      const $n2 = $('#num2');
+      const v1 = $n1.val();
+      const v2 = $n2.val();
+      let ok = true;
+
+      // Field 1
+      if(!v1.trim() || !isValidNumber(v1)){
+        showErr($('#num1Err'), 'Please enter a valid number');
+        ok = false;
+      } else {
+        clearErr($('#num1Err'));
+      }
+      // Field 2
+      if(!v2.trim() || !isValidNumber(v2)){
+        showErr($('#num2Err'), 'Please enter a valid number');
+        ok = false;
+      } else {
+        clearErr($('#num2Err'));
+      }
+
+      return { ok, n1: parseFloat(v1), n2: parseFloat(v2) };
+    };
+
+    // ---------- Single arrow function for all operations ----------
+    const calculate = (num1, num2, operation) => {
+      switch(operation){
+        case 'add': return num1 + num2;
+        case 'subtract': return num1 - num2;
+        case 'multiply': return num1 * num2;
+        case 'divide':
+          if(num2 === 0){ throw new Error('Division by zero'); }
+          return num1 / num2;
+        default: throw new Error('Unknown operation');
+      }
+    };
+
+    // Keyup/blur validation live feedback
+    $('#num1, #num2').on('focus', function(){
+      $(this.id === 'num1' ? '#num1Err' : '#num2Err').text('');
+    }).on('keyup blur', function(){
+      readAndValidateInputs();
+    });
+
+    // Buttons click: process flow using jQuery chaining
+    $('.btn').on('click', function(){
+      const op = $(this).data('op');
+      const { ok, n1, n2 } = readAndValidateInputs();
+      if(!ok){
+        $('#result').val('');
+        return;
+      }
+      try{
+        const out = calculate(n1, n2, op);
+        // Display result + subtle UI feedback using chaining
+        $('#result').val(String(out)).fadeOut(50).fadeIn(100);
+      }catch(err){
+        // Edge-case errors (e.g., divide by zero)
+        $('#result').val('');
+        if(op === 'divide' && n2 === 0){
+          // Put message under Number 2 since it's the problematic value
+          $('#num2Err').text('Cannot divide by zero');
+        } else {
+          $('#num2Err').text(err.message);
+        }
+      }
+    });
+
+    // ---------- Logout ----------
+    $('#logoutBtn').on('click', function(){
+      try{ localStorage.removeItem('authSession'); }catch(_){}
+      try{ sessionStorage.removeItem('authSession'); }catch(_){}}
+    );
+
+    $('#logoutBtn').on('click', function(){
+      $('body').fadeOut(200, function(){
+        window.location.href = 'login.html';
+      });
+    });
+  </script>
+</body>
+</html>
