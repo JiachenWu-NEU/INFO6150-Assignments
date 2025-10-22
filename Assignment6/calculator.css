@@ -1,0 +1,145 @@
+:root {
+  --bg: #f5f7fb;
+  --card: #ffffff;
+  --ink: #0f172a;
+  --muted: #6b7280;
+  --brand: #b5121b;
+  --danger: #b91c1c;
+  --ok: #16a34a;
+  --ring: #94a3b8;
+}
+* {
+    box-sizing: border-box
+}
+html,body {
+    height: 100%
+}
+body {
+    margin:0;
+    font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,"Helvetica Neue",Arial,sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+header {
+    background: var(--card);
+    border-bottom: 1px solid #e5e7eb;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px
+}
+.brand {
+    font-weight: 800;
+    letter-spacing: .2px
+}
+.welcome {
+    font-weight: 600
+}
+.logout {
+    border: 0;
+    background: var(--brand);
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer
+}
+main {
+    display: grid;
+    place-items: center;
+    padding: 24px
+}
+.card {
+    width: 100%;
+    max-width: 640px;
+    background: var(--card);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(2,6,23,.08);
+    border: 1px solid #e5e7eb
+}
+h2 {
+    margin: 0 0 14px
+}
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px
+}
+.field {
+    display: flex;
+    flex-direction: column
+}
+label {
+    font-weight: 600;
+    margin-bottom: 8px
+}
+input[type="text"], input[readonly] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+    transition: border .15s, box-shadow .15s
+}
+input[type="text"]:focus {
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px rgba(148,163,184,.25)
+}
+input[readonly] {
+    background: #f9fafb
+}
+.error {
+    color: var(--danger);
+    min-height: 1.2em;
+    font-size: .9rem;
+    margin-top: 6px
+}
+.ops {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 10px;
+    margin: 10px 0 6px
+}
+.btn {
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer
+}
+.btn:active {
+    transform: translateY(1px)
+}
+.result-row {
+    margin-top: 10px
+}
+
+@media (max-width: 720px) {
+    .grid {
+        grid-template-columns: 1fr
+    }
+    .ops {
+        grid-template-columns: repeat(2, 1fr)
+    }
+    header {
+        flex-direction: column;
+        align-items: flex-start
+    }
+}
+@media (max-width: 420px){
+    body {
+        grid-template-rows: auto 1fr
+    }
+    .card {
+        padding: 18px
+    }
+    .ops {
+        grid-template-columns: 1fr
+    }
+}
