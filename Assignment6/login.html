@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login • Northeastern</title>
+  <!-- jQuery (required by spec) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+  <main class="card">
+    <h1>Sign in to Northeastern</h1>
+    <p class="subtitle">Use your <strong>@northeastern.edu</strong> email.</p>
+
+    <form id="loginForm" novalidate>
+      <!-- Email -->
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" placeholder="you@northeastern.edu" />
+        <div id="emailError" class="error" aria-live="polite"></div>
+      </div>
+
+      <!-- Password -->
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" />
+        <div id="passwordError" class="error" aria-live="polite"></div>
+        <div class="hint">Minimum 8 characters.</div>
+      </div>
+
+      <div class="row">
+        <label class="remember"><input id="rememberMe" type="checkbox" /> Remember Me</label>
+      </div>
+
+      <button id="loginBtn" class="btn" type="submit" disabled>Log In</button>
+      <div id="formError" class="general-error" aria-live="polite"></div>
+      <div id="loginSuccess" class="success" role="status">✔ Login successful! Redirecting to calculator…</div>
+    </form>
+
+    <p class="footer">Demo hardcoded users (email → password):<br>
+      <code>alice@northeastern.edu</code> → <code>Password123</code><br>
+      <code>husky@northeastern.edu</code> → <code>GoHuskies2025</code>
+    </p>
+  </main>
+
+  <script>
+    // --- Hardcoded users ---
+    const USERS = [
+      { email: "alice@northeastern.edu", password: "Password123" },
+      { email: "husky@northeastern.edu", password: "GoHuskies2025" },
+      { email: "student@northeastern.edu", password: "Welcome2024" }
+    ];
+
+    // --- Helpers ---
+    function isValidNEUEmail(value){
+      // Must be non-empty, valid format, and end with @northeastern.edu
+      // jQuery used to read value and manage DOM; regex for logic.
+      const pattern = /^[A-Za-z0-9._%+-]+@northeastern\.edu$/i;
+      return pattern.test(String(value).trim());
+    }
+
+    function enableButtonIfValid(){
+      const ok = validateEmail(false) & validatePassword(false); // bitwise to call both
+      if(ok){
+        $("#loginBtn").prop("disabled", false).addClass("enabled");
+      }else{
+        $("#loginBtn").prop("disabled", true).removeClass("enabled");
+      }
+    }
+
+    // --- Field validators (use jQuery for DOM updates) ---
+    function validateEmail(showMsg=true){
+      const val = $("#email").val();
+      const $err = $("#emailError");
+      let ok = true;
+      if(!val || !val.trim()){
+        ok = false; if(showMsg) $err.text("Please enter a valid Northeastern email");
+      }else if(!isValidNEUEmail(val)){
+        ok = false; if(showMsg) $err.text("Please enter a valid Northeastern email");
+      }
+      if(ok && showMsg) $err.text("");
+      return ok;
+    }
+
+    function validatePassword(showMsg=true){
+      const val = $("#password").val();
+      const $err = $("#passwordError");
+      let ok = true;
+      if(!val || !val.trim()){
+        ok = false; if(showMsg) $err.text("Password cannot be empty");
+      }else if(val.length < 8){
+        ok = false; if(showMsg) $err.text("Password must be at least 8 characters");
+      }
+      if(ok && showMsg) $err.text("");
+      return ok;
+    }
+
+    // --- Event wiring ---
+    $(function(){
+      // Clear errors when focusing a field
+      $("#email").on("focus", function(){ $("#emailError").text(""); $("#formError").text(""); });
+      $("#password").on("focus", function(){ $("#passwordError").text(""); $("#formError").text(""); });
+
+      // Validate on keyup and blur
+      $("#email").on("keyup blur", function(){ validateEmail(true); enableButtonIfValid(); });
+      $("#password").on("keyup blur", function(){ validatePassword(true); enableButtonIfValid(); });
+
+      // Submit handler
+      $("#loginForm").on("submit", function(e){
+        e.preventDefault();
+        const emailOk = validateEmail(true);
+        const passOk = validatePassword(true);
+        enableButtonIfValid();
+        if(!(emailOk && passOk)) return; // Don't attempt auth if fields invalid
+
+        // Verify credentials against hardcoded users
+        const email = $("#email").val().trim();
+        const password = $("#password").val();
+        const match = USERS.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
+
+        if(!match){
+          $("#formError").text("Invalid email or password");
+          $("#loginSuccess").hide();
+          return;
+        }
+
+        // Create session (sessionStorage or localStorage if Remember Me)
+        const store = $("#rememberMe").is(":checked") ? window.localStorage : window.sessionStorage;
+        const username = email.split("@")[0];
+        const sessionObj = {
+          username: username,
+          email: email,
+          loginTimestamp: new Date().toISOString(),
+          isLoggedIn: true
+        };
+        try{
+          store.setItem("authSession", JSON.stringify(sessionObj));
+        }catch(err){
+          // Fallback to sessionStorage if localStorage blocked
+          window.sessionStorage.setItem("authSession", JSON.stringify(sessionObj));
+        }
+
+        // Success UI (no popups) + redirect after 2s
+        $("#formError").text("");
+        $("#loginSuccess").stop(true,true).hide().slideDown(200).delay(1500).fadeOut(300, function(){
+          window.location.href = "calculator.html"; // target page per spec
+        });
+      });
+
+      // Initial state
+      enableButtonIfValid();
+    });
+  </script>
+</body>
+</html>
