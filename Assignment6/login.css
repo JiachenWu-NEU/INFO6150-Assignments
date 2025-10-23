@@ -137,3 +137,77 @@ input[type="email"]:focus, input[type="password"]:focus {
     white-space:nowrap;
     border:0
 }
+
+@media (max-width: 900px) {
+    body {
+        padding: 16px;
+    }
+    .card {
+        max-width: 520px;
+        border-radius: 14px;
+        padding: 24px;
+    }
+    h1 { 
+        font-size: 1.35rem;
+    }
+    .subtitle {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 720px) {
+    .card {
+        max-width: 94vw;
+        padding: 22px;
+    }
+    .row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 420px) {
+    .card {
+        padding: 18px;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(2,6,23,.08);
+    }
+    h1 {
+        font-size: 1.2rem;
+        margin-bottom: 14px;
+    }
+    .subtitle {
+        margin-bottom: 14px;
+    }
+    label {
+        font-size: 0.95rem;
+    }
+    input[type="email"],
+    input[type="password"] {
+        font-size: 16px;
+        padding: 12px;
+    }
+    .hint, .footer {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 340px) {
+    .card {
+        padding: 16px;
+    }
+    .btn {
+        font-size: 0.95rem;
+        padding: 11px 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    }
+}

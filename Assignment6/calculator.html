@@ -1,48 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calculator • Northeastern</title>
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="calculator.css" />
+    <script src="calculator.js" defer></script>
 </head>
 <body>
-  <header>
-    <div class="brand">Northeastern • Calculator</div>
-    <div class="welcome" id="welcomeText">Welcome!</div>
-    <button id="logoutBtn" class="logout">Logout</button>
-  </header>
+    <header>
+        <div class="brand">Calculator</div>
+        <div class="welcome" id="welcomeText">Welcome!</div>
+        <button id="logoutBtn" class="logout">Logout</button>
+    </header>
 
-  <main>
-    <section class="card">
-      <h2>Simple Calculator</h2>
-      <div class="grid">
-        <div class="field">
-          <label for="num1">Number 1</label>
-          <input id="num1" type="text" inputmode="decimal" placeholder="e.g. -12.5" />
-          <div id="num1Err" class="error" aria-live="polite"></div>
-        </div>
-        <div class="field">
-          <label for="num2">Number 2</label>
-          <input id="num2" type="text" inputmode="decimal" placeholder="e.g. 3.14" />
-          <div id="num2Err" class="error" aria-live="polite"></div>
-        </div>
-      </div>
+    <main>
+        <section class="card">
+            <h2>Simple Calculator</h2>
+            <div class="grid">
+                <div class="field">
+                    <label for="num1">Number 1</label>
+                    <input id="num1" type="text" inputmode="decimal" placeholder="e.g. -12.5" />
+                    <div id="num1Err" class="error" aria-live="polite"></div>
+                </div>
+                <div class="field">
+                    <label for="num2">Number 2</label>
+                    <input id="num2" type="text" inputmode="decimal" placeholder="e.g. 3.14" />
+                    <div id="num2Err" class="error" aria-live="polite"></div>
+                </div>
+            </div>
 
-      <div class="ops">
-        <button class="btn" data-op="add">Add</button>
-        <button class="btn" data-op="subtract">Subtract</button>
-        <button class="btn" data-op="multiply">Multiply</button>
-        <button class="btn" data-op="divide">Divide</button>
-      </div>
+            <div class="ops">
+                <button class="btn" data-op="add">Add</button>
+                <button class="btn" data-op="subtract">Subtract</button>
+                <button class="btn" data-op="multiply">Multiply</button>
+                <button class="btn" data-op="divide">Divide</button>
+            </div>
 
-      <div class="grid result-row">
-        <div class="field">
-          <label for="result">Result</label>
-          <input id="result" type="text" readonly />
-        </div>
-      </div>
-    </section>
-  </main>  
+            <div class="grid result-row">
+                <div class="field">
+                    <label for="result">Result</label>
+                    <input id="result" type="text" readonly />
+                </div>
+            </div>
+        </section>
+    </main>  
 </body>
 </html>

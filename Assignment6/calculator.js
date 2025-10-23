@@ -77,6 +77,7 @@ $('.btn').on('click', function() {
     const op = $(this).data('op');
     const { ok, n1, n2 } = readAndValidateInputs();
     if(!ok){
+        alert('Please fix input errors before calculating.');
         $('#result').val('');
         return;
     }
