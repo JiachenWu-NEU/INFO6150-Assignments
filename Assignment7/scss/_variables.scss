@@ -1,0 +1,51 @@
+$brand: #0ea5e9;
+$ink: #0f172a;
+$muted: #64748b;
+$bg: #0b1020;
+$panel: #111827;
+$radius: 1.25rem;
+
+$breakpoints: (
+  sm: 480px,
+  md: 768px,
+  lg: 1024px
+);
+
+$space: (0: 0, 1: 0.25rem, 2: 0.5rem, 3: 0.75rem, 4: 1rem, 5: 1.5rem, 6: 2rem);
+
+$colors: (
+  brand: $brand,
+  ink: $ink,
+  muted: $muted,
+  bg: $bg,
+  panel: $panel,
+  ring: #94a3b8,
+  white: #ffffff
+);
+
+// CSS Custom Properties, generated from SASS vars (dual system)
+:root {
+  // base theme
+  @each $k, $v in $colors {
+    --#{$k}: #{$v}; // interpolation → custom props
+  }
+  --radius: #{$radius};
+  --shadow: 0 10px 30px rgba(2, 6, 23, 0.12);
+  --font: system-ui, -apple-system, Segoe UI, Inter, Roboto, Arial, sans-serif;
+}
+[data-theme="dark"] {
+  // simple dark variant: tweak panel/bg/ink/muted
+  --bg: #0b1020;
+  --panel: #0f172a;
+  --ink: #e5e7eb;
+  --muted: #94a3b8;
+}
+[data-theme="light"] {
+  --bg: #f5f7fb;
+  --panel: #ffffff;
+  --ink: #0f172a;
+  --muted: #6b7280;
+}
+
+// Expose tokens for @use importers if needed
+$__export__: true;
