@@ -1,125 +1,95 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Imperial Japanese Battleships — Ships</title>
-  <link rel="stylesheet" href="dist/styles.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Imperial Japanese Battleships — Ships</title>
+    <link rel="stylesheet" href="dist/styles.css" />
+    <script src="ships.js" defer></script>
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="index.html">IJN Battleships</a>
-    <nav class="nav">
-      <a class="nav__link" href="index.html">Overview</a>
-      <a class="nav__link is-active" href="ships.html">Ships</a>
-      <button class="btn btn--ghost" id="themeToggle" aria-label="Toggle theme">🌓</button>
-    </nav>
-  </header>
+    <header class="site-header">
+        <a class="brand" href="index.html">IJN Battleships</a>
+        <nav class="nav">
+            <a class="nav__link" href="index.html">Overview</a>
+            <a class="nav__link is-active" href="ships.html">Ships</a>
+            <button class="btn btn--ghost" id="themeToggle" aria-label="Toggle theme">🌓</button>
+        </nav>
+    </header>   
 
-  <!-- FLEX LAYOUT #1: filter bar -->
-  <section class="container filter-bar">
-    <div class="filters">
-      <label class="chip"><input type="checkbox" checked> WW2</label>
-      <label class="chip"><input type="checkbox"> WW1/Inter-war</label>
-    </div>
-    <div class="search">
-      <input class="input" type="search" placeholder="Search ships… (e.g., Yamato)" id="q">
-    </div>
-  </section>
+    <section class="container filter-bar">
+        <div class="filters">
+            <label class="chip"><input type="checkbox" checked> WW2</label>
+            <label class="chip"><input type="checkbox"> WW1/Inter-war</label>
+        </div>
+        <div class="search">
+            <input class="input" type="search" placeholder="Search ships… (e.g., Yamato)" id="q">
+        </div>
+    </section>  
 
-  <!-- FLEX LAYOUT #2 + cards -->
-  <section class="container ship-list">
-    <article class="ship-card">
-      <img src="assets/yamato.jpg" alt="Yamato">
-      <div class="ship-card__body">
-        <h3>Yamato</h3>
-        <p>Yamato-class (Commissioned 1941)</p>
-        <a class="btn btn--outline btn--sm" href="#yamato-specs">Quick specs</a>
-      </div>
-    </article>
+    <section class="container ship-list">
+        <article class="ship-card">
+            <img src="assets/yamato.jpg" alt="Yamato">
+            <div class="ship-card__body">
+                <h3>Yamato</h3>
+                <p>Yamato-class (Commissioned 1941)</p>
+                <a class="btn btn--outline btn--sm" href="#yamato-specs">Quick specs</a>
+            </div>
+        </article>    
+        <article class="ship-card">
+            <img src="assets/musashi.jpg" alt="Musashi">
+            <div class="ship-card__body">
+                <h3>Musashi</h3>
+                <p>Yamato-class (Commissioned 1942)</p>
+                <a class="btn btn--outline btn--sm" href="#musashi-specs">Quick specs</a>
+            </div>
+        </article>    
+        <article class="ship-card">
+            <img src="assets/nagato.jpg" alt="Nagato">
+            <div class="ship-card__body">
+                <h3>Nagato</h3>
+                <p>Nagato-class (Commissioned 1920)</p>
+                <a class="btn btn--outline btn--sm" href="#nagato-specs">Quick specs</a>
+            </div>
+        </article>    
+        <article class="ship-card">
+            <img src="assets/fuso.jpg" alt="Fusō">
+            <div class="ship-card__body">
+                <h3>Fusō</h3>
+                <p>Fusō-class (Commissioned 1915)</p>
+                <a class="btn btn--outline btn--sm" href="#fuso-specs">Quick specs</a>
+            </div>
+        </article>
+    </section>  
 
-    <article class="ship-card">
-      <img src="assets/musashi.jpg" alt="Musashi">
-      <div class="ship-card__body">
-        <h3>Musashi</h3>
-        <p>Yamato-class (Commissioned 1942)</p>
-        <a class="btn btn--outline btn--sm" href="#musashi-specs">Quick specs</a>
-      </div>
-    </article>
+    <section class="container spec-grid" id="yamato-specs" aria-labelledby="yamato-title">
+        <h2 id="yamato-title">Yamato — Quick Specs</h2>
+        <div class="spec-grid__table">
+            <div class="k">Displacement</div><div class="v">~72,000 t (full)</div>
+            <div class="k">Main Battery</div><div class="v">9 × 46 cm/45</div>
+            <div class="k">Speed</div><div class="v">27 kn</div>
+            <div class="k">Commissioned</div><div class="v">1941</div>
+        </div>
+    </section>  
 
-    <article class="ship-card">
-      <img src="assets/nagato.jpg" alt="Nagato">
-      <div class="ship-card__body">
-        <h3>Nagato</h3>
-        <p>Nagato-class (Commissioned 1920)</p>
-        <a class="btn btn--outline btn--sm" href="#nagato-specs">Quick specs</a>
-      </div>
-    </article>
-
-    <article class="ship-card">
-      <img src="assets/fuso.jpg" alt="Fusō">
-      <div class="ship-card__body">
-        <h3>Fusō</h3>
-        <p>Fusō-class (Commissioned 1915)</p>
-        <a class="btn btn--outline btn--sm" href="#fuso-specs">Quick specs</a>
-      </div>
-    </article>
-  </section>
-
-  <!-- GRID LAYOUT #3: CSS-grid “spec table” (card-like) -->
-  <section class="container spec-grid" id="yamato-specs" aria-labelledby="yamato-title">
-    <h2 id="yamato-title">Yamato — Quick Specs</h2>
-    <div class="spec-grid__table">
-      <div class="k">Displacement</div><div class="v">~72,000 t (full)</div>
-      <div class="k">Main Battery</div><div class="v">9 × 46 cm/45</div>
-      <div class="k">Speed</div><div class="v">27 kn</div>
-      <div class="k">Commissioned</div><div class="v">1941</div>
-    </div>
-  </section>
-
-  <!-- GRID LAYOUT #4: Responsive table fallback -->
-  <section class="container data-table">
-    <h2>Comparison</h2>
-    <table class="rtable">
-      <thead>
-        <tr>
-          <th>Ship</th><th>Class</th><th>Main Guns</th><th>Speed</th><th>Commissioned</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Yamato</td><td>Yamato</td><td>9×46 cm</td><td>27 kn</td><td>1941</td></tr>
-        <tr><td>Musashi</td><td>Yamato</td><td>9×46 cm</td><td>27 kn</td><td>1942</td></tr>
-        <tr><td>Nagato</td><td>Nagato</td><td>8×41 cm</td><td>26.5 kn</td><td>1920</td></tr>
-        <tr><td>Fusō</td><td>Fusō</td><td>12×36 cm</td><td>24.7 kn</td><td>1915</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <footer class="site-footer container">
-    <p>© Coursework demo. Images are placeholders—replace with your licensed assets.</p>
-  </footer>
-
-  <script>
-    // Tiny client-side filter
-    const q = document.getElementById('q');
-    const cards = [...document.querySelectorAll('.ship-card')];
-    q?.addEventListener('input', e => {
-      const term = e.target.value.trim().toLowerCase();
-      cards.forEach(card => {
-        const text = card.innerText.toLowerCase();
-        card.style.display = text.includes(term) ? '' : 'none';
-      });
-    });
-    // Theme
-    const root = document.documentElement;
-    const btn = document.getElementById('themeToggle');
-    btn?.addEventListener('click', () => {
-      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      root.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-    });
-    const saved = localStorage.getItem('theme');
-    if (saved) document.documentElement.setAttribute('data-theme', saved);
-  </script>
+    <section class="container data-table">
+        <h2>Comparison</h2>
+        <table class="rtable">
+            <thead>
+                <tr>
+                    <th>Ship</th><th>Class</th><th>Main Guns</th><th>Speed</th><th>Commissioned</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Yamato</td><td>Yamato</td><td>9×46 cm</td><td>27 kn</td><td>1941</td></tr>
+                <tr><td>Musashi</td><td>Yamato</td><td>9×46 cm</td><td>27 kn</td><td>1942</td></tr>
+                <tr><td>Nagato</td><td>Nagato</td><td>8×41 cm</td><td>26.5 kn</td><td>1920</td></tr>
+                <tr><td>Fusō</td><td>Fusō</td><td>12×36 cm</td><td>24.7 kn</td><td>1915</td></tr>
+            </tbody>
+        </table>
+    </section>  
+    <footer class="site-footer container">
+        <p>© Coursework demo. Images are placeholders—replace with your licensed assets.</p>
+    </footer>
 </body>
 </html>
