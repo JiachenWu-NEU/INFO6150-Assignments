@@ -1,0 +1,11 @@
+@use "./functions" as fn;
+
+@each $k, $prop in (t: margin-top, r: margin-right, b: margin-bottom, l: margin-left) {
+  @for $i from 0 through 6 {
+    .m#{$k}-#{$i} { #{$prop}: fn.spacing($i); }
+  }
+}
+@for $i from 0 through 6 { .gap-#{$i} { gap: fn.spacing($i); } }
+
+.hide-sm { display: none; }
+@media (min-width: 768px) { .hide-sm { display: initial; } }

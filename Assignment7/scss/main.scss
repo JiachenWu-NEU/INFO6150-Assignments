@@ -1,11 +1,11 @@
-@use "variables" as *;     // exposes maps, tokens, CSS vars helper
-@use "functions" as fn;    // spacing(), ms()
-@use "mixins" as mx;       // grid(), flex-center, respond(), elevation(), button()
-@use "placeholders";       // %card, %focus-ring
-@use "layout/base";
-@use "layout/grid";
-@use "layout/flex";
-@use "components/header";
-@use "components/card";
-@use "components/tables";
-@use "utilities";
+@use "./variables" as *;
+@use "./functions" as fn;
+@use "./mixins" as mx;
+@use "./placeholders";
+@use "./layout/base";
+@use "./layout/grid";
+@use "./layout/flex";
+@use "./components/header";
+@use "./components/card";
+@use "./components/tables";
+@use "./utilities";

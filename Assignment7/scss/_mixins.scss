@@ -1,5 +1,5 @@
-@use "variables" as *;
-@use "functions" as fn;
+@use "./variables" as *;
+@use "./functions" as fn;
 
 @mixin respond($bp) {
   @if map-has-key($breakpoints, $bp) {
@@ -10,7 +10,6 @@
 }
 
 @mixin elevation($z: 1) {
-  // tiny stepped shadow
   box-shadow: 0 (2px * $z) (12px * $z) rgba(2,6,23,0.08);
 }
 
@@ -36,5 +35,5 @@
   } @else if $variant == ghost {
     background: transparent; color: var(--ink);
   }
-  @content; // allow per-instance tweaks
+  @content;
 }

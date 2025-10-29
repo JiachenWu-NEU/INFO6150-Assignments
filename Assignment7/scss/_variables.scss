@@ -23,18 +23,15 @@ $colors: (
   white: #ffffff
 );
 
-// CSS Custom Properties, generated from SASS vars (dual system)
 :root {
-  // base theme
   @each $k, $v in $colors {
-    --#{$k}: #{$v}; // interpolation → custom props
+    --#{$k}: #{$v};
   }
   --radius: #{$radius};
   --shadow: 0 10px 30px rgba(2, 6, 23, 0.12);
   --font: system-ui, -apple-system, Segoe UI, Inter, Roboto, Arial, sans-serif;
 }
 [data-theme="dark"] {
-  // simple dark variant: tweak panel/bg/ink/muted
   --bg: #0b1020;
   --panel: #0f172a;
   --ink: #e5e7eb;
@@ -47,5 +44,4 @@ $colors: (
   --muted: #6b7280;
 }
 
-// Expose tokens for @use importers if needed
 $__export__: true;

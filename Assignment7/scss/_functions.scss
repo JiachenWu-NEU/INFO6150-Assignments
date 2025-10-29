@@ -1,12 +1,12 @@
-// Spacing getter with error handling
+@use "./variables" as vars;
+
 @function spacing($key) {
-  @if map-has-key($space, $key) {
-    @return map-get($space, $key);
+  @if map-has-key(vars.$space, $key) {
+    @return map-get(vars.$space, $key);
   }
   @error "Unknown spacing key: #{$key}";
 }
 
-// Modular scale for type/rhythm
 @function ms($step, $base: 1rem, $ratio: 1.25) {
   @return $base * pow($ratio, $step);
 }

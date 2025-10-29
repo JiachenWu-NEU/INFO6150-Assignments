@@ -17,6 +17,7 @@
   @include mx.grid(1, fn.spacing(4));
   @include mx.respond(md) { @include mx.grid(2, fn.spacing(4)); }
 }
+
 .spec-grid {
   margin: fn.spacing(6) 0;
   &__table {
@@ -29,4 +30,5 @@
     .v { color: var(--muted); }
   }
 }
+
 .data-table { margin: fn.spacing(6) 0; }
