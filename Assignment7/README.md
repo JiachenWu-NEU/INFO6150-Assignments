@@ -8,7 +8,5 @@ Topic: **Imperial Japanese Navy battleships** (Yamato, Musashi, Nagato, Fusō).
 - `ships.html` — Filter/search (Flex #1), ship cards list (Flex #2), spec grid (Grid #3), responsive table (Grid #4).
 
 ## How to Run
-1. **Install Sass** (Dart Sass):
-   ```bash
-   npm init -y
-   npm install --save-dev sass
+Open index.html in a browser
+(the scss part has alraeady been built up)
