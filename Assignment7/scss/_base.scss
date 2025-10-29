@@ -1,0 +1,20 @@
+@use "../variables";
+@use "../functions" as fn;
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--bg);
+}
+
+.container { width: min(1100px, 100% - 2rem); margin-inline: auto; }
+
+h1 { font-size: fn.ms(3); margin: fn.spacing(5) 0 fn.spacing(3); }
+h2 { font-size: fn.ms(2); margin: fn.spacing(5) 0 fn.spacing(3); }
+h3 { font-size: fn.ms(1); margin: fn.spacing(3) 0 fn.spacing(2); }
+
+a { color: var(--brand); text-decoration: none; }
+a:hover { text-decoration: underline; }

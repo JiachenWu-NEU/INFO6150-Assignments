@@ -1,0 +1,40 @@
+@use "variables" as *;
+@use "functions" as fn;
+
+@mixin respond($bp) {
+  @if map-has-key($breakpoints, $bp) {
+    @media (min-width: map-get($breakpoints, $bp)) { @content; }
+  } @else {
+    @warn "Unknown breakpoint `#{$bp}`";
+  }
+}
+
+@mixin elevation($z: 1) {
+  // tiny stepped shadow
+  box-shadow: 0 (2px * $z) (12px * $z) rgba(2,6,23,0.08);
+}
+
+@mixin flex-center($gap: 0.5rem) {
+  display: flex; align-items: center; gap: $gap;
+}
+
+@mixin grid($cols, $gap: 1rem) {
+  display: grid;
+  grid-template-columns: repeat($cols, minmax(0, 1fr));
+  gap: $gap;
+}
+
+@mixin button($variant: filled) {
+  border-radius: var(--radius);
+  padding: fn.spacing(3) fn.spacing(4);
+  font-weight: 600;
+  border: 1px solid transparent;
+  @if $variant == filled {
+    background: var(--brand); color: white;
+  } @else if $variant == outline {
+    background: transparent; color: var(--brand); border-color: var(--brand);
+  } @else if $variant == ghost {
+    background: transparent; color: var(--ink);
+  }
+  @content; // allow per-instance tweaks
+}

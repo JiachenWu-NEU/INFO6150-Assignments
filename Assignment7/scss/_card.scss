@@ -1,0 +1,16 @@
+@use "../placeholders";
+@use "../functions" as fn;
+
+.card { @extend %card;
+  display: grid; grid-template-rows: auto 1fr;
+  .card__img { width: 100%; height: 180px; object-fit: cover; display: block; }
+  .card__body { padding: fn.spacing(4); }
+  .card__title { margin: 0 0 fn.spacing(2); }
+}
+
+.ship-card { @extend %card;
+  width: clamp(260px, 45%, 520px);
+  display: grid; grid-template-columns: 160px 1fr; gap: 0;
+  img { width: 100%; height: 100%; object-fit: cover; }
+  &__body { padding: 1rem; display: grid; align-content: center; gap: .25rem; }
+}

@@ -1,0 +1,32 @@
+@use "../mixins" as mx;
+@use "../functions" as fn;
+
+.hero-grid {
+  @include mx.grid(1, fn.spacing(6));
+  padding: fn.spacing(6) 0;
+
+  &__media img { width: 100%; display: block; border-radius: var(--radius); }
+  &__content { align-self: center; }
+
+  .hero-actions { @include mx.flex-center(fn.spacing(3)); flex-wrap: wrap; }
+  @include mx.respond(md) { @include mx.grid(2, fn.spacing(6)); }
+}
+
+.class-gallery {
+  margin: fn.spacing(6) 0;
+  @include mx.grid(1, fn.spacing(4));
+  @include mx.respond(md) { @include mx.grid(2, fn.spacing(4)); }
+}
+.spec-grid {
+  margin: fn.spacing(6) 0;
+  &__table {
+    @include mx.grid(2, fn.spacing(2));
+    background: var(--panel);
+    border-radius: var(--radius);
+    padding: fn.spacing(4);
+    border: 1px solid rgba(148,163,184,.25);
+    .k { font-weight: 600; }
+    .v { color: var(--muted); }
+  }
+}
+.data-table { margin: fn.spacing(6) 0; }

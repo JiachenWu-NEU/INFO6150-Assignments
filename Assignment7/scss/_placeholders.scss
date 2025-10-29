@@ -1,0 +1,11 @@
+%card {
+  background: var(--panel);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: var(--radius);
+  overflow: clip;
+  @include elevation(1);
+}
+
+%focus-ring {
+  &:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+}

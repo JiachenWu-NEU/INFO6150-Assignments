@@ -1,0 +1,33 @@
+@use "../mixins" as mx;
+@use "../functions" as fn;
+
+.site-header {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--panel);
+  border-bottom: 1px solid rgba(148,163,184,.25);
+  padding: fn.spacing(3);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.brand { font-weight: 800; letter-spacing: .2px; }
+
+.nav { display: flex; gap: fn.spacing(3); align-items: center; }
+.nav__link { padding: .4rem .6rem; border-radius: .5rem; }
+.nav__link.is-active { background: rgba(14,165,233,.12); }
+
+.filter-bar {
+  margin: fn.spacing(5) auto fn.spacing(2);
+  display: flex; align-items: center; justify-content: space-between; gap: fn.spacing(3);
+  flex-wrap: wrap;
+}
+.filters { display: flex; gap: fn.spacing(2); flex-wrap: wrap; }
+.chip { display: inline-flex; align-items: center; gap: .5rem; padding: .35rem .6rem;
+  border: 1px solid rgba(148,163,184,.4); border-radius: 999px; background: var(--panel);
+}
+.search .input {
+  padding: .6rem .8rem; border-radius: .6rem; border: 1px solid rgba(148,163,184,.4);
+  background: var(--panel); color: var(--ink);
+}
+
+.ship-list {
+  display: flex; flex-wrap: wrap; gap: fn.spacing(4);
+}

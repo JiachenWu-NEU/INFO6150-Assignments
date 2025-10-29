@@ -1,0 +1,9 @@
+@use "../functions" as fn;
+
+.rtable {
+  width: 100%; border-collapse: collapse; background: var(--panel);
+  border: 1px solid rgba(148,163,184,.25); border-radius: var(--radius); overflow: hidden;
+  th, td { padding: .75rem 1rem; text-align: left; }
+  thead th { background: rgba(14,165,233,.08); }
+  tbody tr + tr td { border-top: 1px solid rgba(148,163,184,.25); }
+}
