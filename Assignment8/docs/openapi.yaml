@@ -1,0 +1,232 @@
+openapi: 3.0.3
+info:
+  title: User API Assignment
+  version: 1.0.0
+  description: >
+    Endpoints for creating, updating, deleting users, listing users, and uploading a per-user image.
+servers:
+  - url: http://localhost:3000
+paths:
+  /user/create:
+    post:
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [fullName, email, password]
+              properties:
+                fullName:
+                  type: string
+                  example: John Doe
+                email:
+                  type: string
+                  format: email
+                  example: john.doe@example.com
+                password:
+                  type: string
+                  format: password
+                  example: StrongP@ssw0rd!
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User created successfully.
+        "400":
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Validation failed.
+                  details:
+                    type: array
+                    items:
+                      type: object
+        "500":
+          description: Server error
+  /user/edit:
+    put:
+      summary: Update user fullName and/or password by email (email cannot be changed)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: john.doe@example.com
+                fullName:
+                  type: string
+                  example: Jane Doe
+                password:
+                  type: string
+                  format: password
+                  example: NewStr0ngP@ss!
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User updated successfully.
+        "400":
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Validation failed.
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: User not found.
+        "500":
+          description: Server error
+  /user/delete:
+    delete:
+      summary: Delete user by email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: john.doe@example.com
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User deleted successfully.
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: User not found.
+        "500":
+          description: Server error
+  /user/getAll:
+    get:
+      summary: Retrieve all users (hashed passwords included)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        fullName:
+                          type: string
+                          example: John Doe
+                        email:
+                          type: string
+                          format: email
+                          example: john.doe@example.com
+                        password:
+                          type: string
+                          description: Hashed password
+                          example: $2b$10$abc123...
+        "500":
+          description: Server error
+  /user/uploadImage:
+    post:
+      summary: Upload a single image for a specific user (by email)
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [email, image]
+              properties:
+                email:
+                  type: string
+                  format: email
+                image:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Image uploaded successfully.
+                  filePath:
+                    type: string
+                    example: /images/1730844533000-123456789.png
+        "400":
+          description: Bad request (invalid file, already exists, validation failed)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Invalid file format. Only JPEG, PNG, and GIF are allowed.
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: User not found.
+components: {}

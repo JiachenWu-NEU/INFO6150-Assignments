@@ -1,0 +1,13 @@
+const mongoose = require('mongoose');
+
+const UserSchema = new mongoose.Schema(
+  {
+    fullName: { type: String, required: true, trim: true },
+    email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+    passwordHash: { type: String, required: true },
+    imagePath: { type: String, default: null }, // '/images/<file>'
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model('User', UserSchema);
