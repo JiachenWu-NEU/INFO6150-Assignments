@@ -15,17 +15,6 @@ This project implements the assignment requirements:
 - Swagger docs at `/api-docs`
 - Postman collection included in `postman/User-API.postman_collection.json`
 
-## Quick Start
-
-```bash
-git clone <your-repo>
-cd user-api-assignment
-cp .env.example .env
-# update .env if needed
-npm install
-npm run dev
-```
-
 Server runs on `http://localhost:3000` and MongoDB URI defaults to `mongodb://localhost:27017/user_api_assignment`.
 
 ## Validation Rules
@@ -37,3 +26,11 @@ Server runs on `http://localhost:3000` and MongoDB URI defaults to `mongodb://lo
 - `GET /user/getAll` returns hashed passwords under `password` as required.
 - Images are saved to local `images/` and served at `/images/<filename>`.
 - Upload rejects second image for the same user with: `Image already exists for this user.`
+
+# How to run
+
+```
+cd assignment8
+npm install
+npm run dev
+```
