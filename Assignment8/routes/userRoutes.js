@@ -17,27 +17,17 @@ const {
 // --- Multer setup for /images folder --- //
 const imagesDir = path.join(__dirname, '..', 'images');
 const publicImagesPath = '/images'; // returned in API
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, imagesDir);
-  },
-  filename: function (req, file, cb) {
-    // avoid collisions (timestamp + random + original)
-    const unique = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    const ext = path.extname(file.originalname).toLowerCase();
-    cb(null, unique + ext);
-  }
-});
-const allowedMimes = ['image/jpeg', 'image/png', 'image/gif'];
+const storage = multer.memoryStorage();
 const upload = multer({
   storage,
   fileFilter: (req, file, cb) => {
-    if (!allowedMimes.includes(file.mimetype)) {
+    const allowed = ['image/jpeg', 'image/png', 'image/gif'];
+    if (!allowed.includes(file.mimetype)) {
       return cb(new Error('Invalid file format. Only JPEG, PNG, and GIF are allowed.'));
     }
     cb(null, true);
   },
-  limits: { fileSize: 5 * 1024 * 1024 } // 5MB
+  limits: { fileSize: 5 * 1024 * 1024 }
 });
 
 // Helper to format validation errors
@@ -153,59 +143,41 @@ router.get('/getAll', async (req, res) => {
 });
 
 // 5) POST /user/uploadImage
-router.post(
-  '/uploadImage',
-  // email must be in body as text field (multer handles multipart)
-  upload.single('image'),
-  async (req, res) => {
-    try {
-      const email = req.body.email;
-      if (!email) {
-        // If file was saved, remove it to avoid orphan
-        if (req.file) fs.unlinkSync(req.file.path);
-        return res.status(400).json({ error: 'Validation failed.', details: [{ msg: 'email is required', param: 'email' }] });
-      }
+router.post('/uploadImage', upload.single('image'), async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ error: 'Validation failed.', details: [{ msg: 'email is required', param: 'email' }] });
 
-      // Validate email format (simple check)
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        if (req.file) fs.unlinkSync(req.file.path);
-        return res.status(400).json({ error: 'Validation failed.', details: [{ msg: 'email format is invalid', param: 'email' }] });
-      }
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ error: 'User not found.' });
 
-      const user = await User.findOne({ email });
-      if (!user) {
-        if (req.file) fs.unlinkSync(req.file.path);
-        return res.status(404).json({ error: 'User not found.' });
-      }
-
-      if (user.imagePath) {
-        if (req.file) fs.unlinkSync(req.file.path);
-        return res.status(400).json({ error: 'Image already exists for this user.' });
-      }
-
-      if (!req.file) {
-        return res.status(400).json({ error: 'Invalid file format. Only JPEG, PNG, and GIF are allowed.' });
-      }
-
-      // Build public path (served by express.static in server.js)
-      const filePath = path.posix.join('/images', path.basename(req.file.path));
-
-      user.imagePath = filePath;
-      await user.save();
-
-      return res.status(201).json({
-        message: 'Image uploaded successfully.',
-        filePath
-      });
-    } catch (e) {
-      console.error(e);
-      if (e.message && e.message.startsWith('Invalid file format')) {
-        return res.status(400).json({ error: 'Invalid file format. Only JPEG, PNG, and GIF are allowed.' });
-      }
-      return res.status(500).json({ error: 'Server error.' });
+    if (user.imagePath) {
+      return res.status(400).json({ error: 'Image already exists for this user.' });
     }
+
+    if (!req.file) {
+      return res.status(400).json({ error: 'Invalid file format. Only JPEG, PNG, and GIF are allowed.' });
+    }
+
+    const path = require('path');
+    const fs = require('fs');
+    const imagesDir = require('path').join(__dirname, '..', 'images');
+
+    const ext = req.file.mimetype === 'image/jpeg' ? '.jpg'
+              : req.file.mimetype === 'image/png'  ? '.png'
+              : '.gif';
+    const filename = `${Date.now()}-${Math.round(Math.random()*1e9)}${ext}`;
+    const fullPath = require('path').join(imagesDir, filename);
+    require('fs').writeFileSync(fullPath, req.file.buffer);
+
+    user.imagePath = '/images/' + filename;
+    await user.save();
+
+    return res.status(201).json({ message: 'Image uploaded successfully.', filePath: user.imagePath });
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ error: 'Server error.' });
   }
-);
+});
 
 module.exports = router;
