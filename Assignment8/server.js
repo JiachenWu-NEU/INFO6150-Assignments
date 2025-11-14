@@ -9,12 +9,14 @@ const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
+app.use('/auth', authRoutes);
 
 // Ensure images folder exists
 const imagesDir = path.join(__dirname, 'images');

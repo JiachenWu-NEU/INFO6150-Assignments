@@ -1,20 +1,27 @@
+import { AppBar, Toolbar, Button, Box } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function NavBar() {
-  const { isAuthed, logout } = useAuth();
+  const { logout } = useAuth();
   const nav = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    nav("/login", { replace: true });
+  };
+
   return (
-    <nav style={{display:"flex",gap:12,padding:12,borderBottom:"1px solid #eee"}}>
-      <Link to="/">Home</Link>
-      <Link to="/about">About</Link>
-      <Link to="/jobs">Job Listings</Link>
-      <Link to="/contact">Contact</Link>
-      <Link to="/companies">Company Showcase</Link>
-      <span style={{flex:1}}/>
-      {!isAuthed
-        ? <button onClick={()=>nav("/login")}>Login</button>
-        : <button onClick={logout}>Logout</button>}
-    </nav>
+    <AppBar position="static">
+      <Toolbar sx={{ gap: 2 }}>
+        <Button color="inherit" component={Link} to="/">Home</Button>
+        <Button color="inherit" component={Link} to="/about">About</Button>
+        <Button color="inherit" component={Link} to="/jobs">Job Listings</Button>
+        <Button color="inherit" component={Link} to="/contact">Contact</Button>
+        <Button color="inherit" component={Link} to="/companies">Company Showcase</Button>
+        <Box sx={{ flex: 1 }} />
+        <Button color="inherit" onClick={handleLogout}>Logout</Button>
+      </Toolbar>
+    </AppBar>
   );
 }
