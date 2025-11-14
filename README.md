@@ -5,3 +5,5 @@
 - for assignment4, please open the readme.md in assignment4 folder.
 - for assignment6, please open the readme.md in assignment6 folder.
 - for assignment7, please open the readme.md in assignment7 folder.
+- for assignment8, please open the readme.md in assignment8 folder.
+- for assignment9, please open the readme.md in assignment9 folder.
