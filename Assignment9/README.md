@@ -1,16 +1,48 @@
-# React + Vite
+# Assignment9
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Setup
 
-Currently, two official plugins are available:
+### Prerequisites
+- Node.js ≥ 18
+- Assignment-8 backend running locally (default `http://localhost:3000`)
+  - Must expose: `POST /auth/login`, `GET /user/getAll`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### How to run
+- unzip the file
+- open a terminal in assginment9 folder and run "npm run dev"
 
-## React Compiler
+## Folder Structure
+- node_modules
+- src
+  - api
+    - axios.js
+  - components
+    - navbar.jsx
+    - protectedlayout.jsx
+  - context
+    - authcontext.jsx
+  - pages
+    - about, company gallery, contact, home, job listing: each folder has one .jsx to show its page
+    - login.jsx: the login page which users will see at the first time
+  - app.jsx
+  - main.jsx
+- index.html
+- others
+  - all other files just under the folder is the config of the project
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Key Functions
 
-## Expanding the ESLint configuration
+- **Auth-gated app**: users must log in first, then access the main site (Home, About, Jobs, Contact, Company Showcase).
+- **Job Listings**: rendered on the front-end via a local `jobPosts` array.
+- **Company Showcase**: displays company cards; images are pulled from the Assignment-8 backend’s `/user/getAll`.
+- **Clean separation**: front-end (this repo) with a previously built **Node/Express/Mongo** backend (Assignment-8).
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Tech Stack
+- **Frontend:** React + Vite, React Router v6, Axios  
+- **UI:** Material UI (pages), Bootstrap (optional for Navbar)  
+- **Backend (external):** Node.js + Express + MongoDB (Assignment-8)
+
+---
+
