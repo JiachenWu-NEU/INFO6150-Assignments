@@ -8,14 +8,14 @@ export default function CompanyShowcase() {
   useEffect(() => {
     (async () => {
       const { data } = await api.get("/user/getAll");
-      const list = (data.users || [])
-        .filter(u => u.password && u.email)
-        .map(u => ({
-          name: u.fullName || u.email,
-          // 你的后端若返回了 user.imagePath，这里直接用
-          image: u.imagePath || null
-        }))
-        .filter(c => !!c.image);
+      const base = (import.meta.env.VITE_API_BASE || "http://localhost:3000").replace(/\/+$/,'');
+      const list = (data?.users || []).map(u => {
+        const raw = u.imagePath || null;
+        const image = raw
+          ? (raw.startsWith('http') ? raw : `${base}/${raw.replace(/^\/+/,'')}`)
+          : null;
+        return { name: u.fullName || u.email, image };
+      });
       setCompanies(list);
     })();
   }, []);

@@ -127,13 +127,14 @@ router.delete(
 // 4) GET /user/getAll
 router.get('/getAll', async (req, res) => {
   try {
-    const users = await User.find({}, { fullName: 1, email: 1, passwordHash: 1, _id: 0 });
+    const users = await User.find({}, { fullName: 1, email: 1, passwordHash: 1, imagePath: 1, _id: 0 });
     // Per assignment: include password (hashed). We'll return 'passwordHash' field.
     return res.status(200).json({
       users: users.map(u => ({
         fullName: u.fullName,
         email: u.email,
-        password: u.passwordHash
+        password: u.passwordHash,
+        imagePath: u.imagePath || null
       }))
     });
   } catch (e) {
