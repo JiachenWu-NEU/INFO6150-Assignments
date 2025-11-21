@@ -1,14 +1,11 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useSelector } from "react-redux";
 import NavBar from "./NavBar";
 
 export default function ProtectedLayout() {
-  const { isAuthed } = useAuth();
-  if (!isAuthed) return <Navigate to="/login" replace />;
-  return (
-    <>
-      <NavBar />
-      <Outlet />
-    </>
-  );
+  const token = useSelector(s => s.auth.token);
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+  return (<><NavBar /><Outlet /></>);
 }
