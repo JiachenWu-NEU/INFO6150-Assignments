@@ -37,7 +37,7 @@ export default function AdminEmployees(){
               <TableRow key={i}>
                 <TableCell>{r.fullName}</TableCell>
                 <TableCell>{r.email}</TableCell>
-                <TableCell>{r.type}</TableCell>
+                <TableCell>{r.role}</TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -10,6 +10,7 @@ const seedAdmin = require('./src/config/seedAdmin');
 const authRoutes = require('./src/routes/authRoutes');
 const userRoutes = require('./src/routes/userRoutes');
 const jobRoutes  = require('./src/routes/jobRoutes');
+const companyRoutes = require('./src/routes/companyRoutes');
 
 const { notFound, errorHandler } = require('./src/middleware/errorHandler');
 
@@ -19,11 +20,12 @@ app.use(cors({ origin: ['http://localhost:5173'], credentials: false }));
 app.use(express.json());
 app.use(morgan('dev'));
 
-app.use('/images', express.static(path.join(__dirname, 'images'))); // TODO: 之后加上传
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/jobs', jobRoutes);
+app.use('/companies', companyRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
