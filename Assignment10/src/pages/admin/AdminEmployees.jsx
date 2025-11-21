@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import api from "../../api/axios";
-import { Container, Typography, Table, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
+import {
+  Box, Typography, Table, TableHead, TableRow, TableCell, TableBody,
+  TableContainer, Paper
+} from "@mui/material";
 
 export default function AdminEmployees(){
   const [rows,setRows] = useState([]);
@@ -8,21 +11,19 @@ export default function AdminEmployees(){
   useEffect(()=>{
     (async ()=>{
       try{
-        // 后端未就绪先占位：若你已有 /users，就改成真实接口
-        // const { data } = await api.get('/users');
-        // setRows(data.users || []);
-        setRows([
-          { fullName: "Jane Admin", email: "jane@ex.com", type: "admin" },
-          { fullName: "John Emp",   email: "john@ex.com", type: "employee" },
-        ]);
+        const { data } = await api.get('/users');
+        setRows(data.users || []);
       }catch(e){ setRows([]); }
     })();
   },[]);
 
   return (
-    <Container sx={{ py: 4 }}>
-      <Typography variant="h5" fontWeight={700} gutterBottom>Employees</Typography>
-      <Paper>
+    <Box sx={{ p: 2, width: "100%" }}>
+      <Typography variant="h5" fontWeight={700} gutterBottom>
+        Employees
+      </Typography>
+
+      <TableContainer component={Paper} sx={{ width: "100%" }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -41,7 +42,7 @@ export default function AdminEmployees(){
             ))}
           </TableBody>
         </Table>
-      </Paper>
-    </Container>
+      </TableContainer>
+    </Box>
   );
 }

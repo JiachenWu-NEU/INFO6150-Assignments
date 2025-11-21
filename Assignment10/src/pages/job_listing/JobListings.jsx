@@ -1,63 +1,138 @@
-import { Card, CardContent, CardActions, Button, Typography, Grid } from "@mui/material";
-
-const jobPosts = [
-  { id:1, title:"Full Stack Developer",
-    description:"Join our dynamic team to work on cutting-edge technologies. Develop and maintain sophisticated web applications for our diverse client base.",
-    lastUpdated:"Last updated 2 days ago",
-    skills: "JavaScript, React, Node.js",
-    salary: "$80,000 - $120,000",
-    applyLink:"https://example.com/apply/full-stack-developer" },
-  { id:2, title:"Digital Marketing Specialist",
-    description:"Elevate our digital marketing strategies to promote our innovative products. Proficiency in SEO, SEM, and social media marketing is highly valued.",
-    lastUpdated:"Last updated 1 day ago",
-    skills: "React, Node.js",
-    salary: "$70,000 - $120,000",
-    applyLink:"https://example.com/apply/digital-marketing-specialist" },
-  { id:3, title:"UX/UI Designer",
-    description:"Shape engaging user experiences and create visually captivating designs. Work alongside cross-functional teams to turn ideas into reality.",
-    lastUpdated:"Last updated 4 hours ago",
-    skills: "JavaScript, Node.js",
-    salary: "$80,000 - $80,000",
-    applyLink:"https://example.com/apply/ux-ui-designer" },
-  { id:4, title:"Data Scientist",
-    description:"Leverage advanced analytics and machine learning to uncover insights from vast data sets. Proficiency with Python and R is a must.",
-    lastUpdated:"Last updated 3 days ago",
-    skills: "Mysql, Spring",
-    salary: "$120,000 - $140,000",
-    applyLink:"https://example.com/apply/data-scientist" },
-  { id:5, title:"Customer Support Representative",
-    description:"Deliver unparalleled customer service and support. Exceptional communication skills and a knack for solving problems are key.",
-    lastUpdated:"Last updated 6 hours ago",
-    skills: "Kubesphere, Redis",
-    salary: "$80,000 - $120,000",
-    applyLink:"https://example.com/apply/customer-support-representative" },
-  { id:6, title:"Project Manager",
-    description:"Guide and coordinate project teams to ensure successful project delivery. Strong organizational and leadership skills are required.",
-    lastUpdated:"Last updated 1 week ago",
-    skills: "Python, Pytorch",
-    salary: "$80,000 - $120,000",
-    applyLink:"https://example.com/apply/project-manager" },
-];
+// src/pages/job_listing/JobListings.jsx
+import { useEffect, useMemo, useState } from "react";
+import api from "../../api/axios";
+import {
+  Box, Container, Typography, TextField, Grid, Card, CardContent,
+  Button, Chip, Stack, Alert, CircularProgress, InputAdornment
+} from "@mui/material";
 
 export default function JobListings() {
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState("");
+
+  const [q, setQ] = useState("");
+  const [tag, setTag] = useState("");
+
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const tags = useMemo(() => {
+    const s = new Set();
+    jobs.forEach(j => (j.tags || []).forEach(t => s.add(t)));
+    return Array.from(s).sort();
+  }, [jobs]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setLoading(true);
+        setErr("");
+
+        const params = {};
+        if (q.trim()) params.q = q.trim();
+        if (tag.trim()) params.tag = tag.trim();
+
+        const { data } = await api.get("/jobs", { params });
+        setJobs(data?.jobs || []);
+      } catch (e) {
+        setErr(e.response?.data?.error || e.message || "Failed to load jobs");
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [refreshKey, q, tag]);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setRefreshKey(k => k + 1);
+  };
+
   return (
-    <Grid container spacing={2} sx={{ p: 2 }}>
-      {jobPosts.map(job => (
-        <Grid item xs={12} md={6} lg={4} key={job.id}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">{job.title}</Typography>
-              <Typography variant="body2" sx={{ my:1 }}>{job.description}</Typography>
-              <Typography variant="body2" sx={{ my:1 }}>Required Skills: {job.skills}</Typography>
-              <Typography variant="body2" sx={{ my:1 }}>Expected Salary: {job.salary}</Typography>
-              <Typography variant="caption" color="text.secondary">{job.lastUpdated}</Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small" href={job.applyLink} target="_blank" rel="noreferrer">Apply</Button>
-            </CardActions>
-          </Card>
+    <Container sx={{ py: 4 }}>
+      <Typography variant="h4" fontWeight={700} gutterBottom>
+        Job Listings
+      </Typography>
+
+      <Box component="form" onSubmit={handleSearch} sx={{ mb: 2 }}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              label="Search jobs..."
+              placeholder="Title / company / description"
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Button type="submit" variant="contained" size="small">Search</Button>
+                  </InputAdornment>
+                )
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+              <Chip
+                label={tag ? `Tag: ${tag}` : "All Tags"}
+                color={tag ? "primary" : "default"}
+                onDelete={tag ? () => setTag("") : undefined}
+              />
+              {tags.map((t) => (
+                <Chip
+                  key={t}
+                  label={t}
+                  variant={t === tag ? "filled" : "outlined"}
+                  color={t === tag ? "primary" : "default"}
+                  clickable
+                  onClick={() => setTag(t === tag ? "" : t)}
+                />
+              ))}
+            </Stack>
+          </Grid>
         </Grid>
-      ))}
-    </Grid>
+      </Box>
+
+      {loading && <CircularProgress size={28} />}
+      {err && <Alert severity="error" sx={{ my: 2 }}>{err}</Alert>}
+      {!loading && !err && jobs.length === 0 && (
+        <Typography color="text.secondary">No jobs found.</Typography>
+      )}
+
+      <Grid container spacing={2} sx={{ mt: 1 }}>
+        {jobs.map((job) => (
+          <Grid item xs={12} md={6} lg={4} key={job._id}>
+            <Card sx={{ height: "100%" }}>
+              <CardContent>
+                <Typography variant="h6" fontWeight={700} gutterBottom>
+                  {job.title}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" gutterBottom>
+                  {job.company} {job.location ? `· ${job.location}` : ""}
+                </Typography>
+                {job.salary && (
+                  <Typography variant="body2" sx={{ mb: 1 }}>
+                    Salary: {job.salary}
+                  </Typography>
+                )}
+                <Typography variant="body2" sx={{ mb: 1.5 }}>
+                  {String(job.description || "").slice(0, 160)}
+                  {String(job.description || "").length > 160 ? "..." : ""}
+                </Typography>
+                <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 1 }}>
+                  {(job.tags || []).map((t, i) => (
+                    <Chip key={i} size="small" label={t} />
+                  ))}
+                </Stack>
+                <Typography variant="caption" color="text.secondary">
+                  Updated: {job.updatedAt ? new Date(job.updatedAt).toLocaleString() : "—"}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
   );
 }
