@@ -2,14 +2,11 @@
 
 ## Project Setup
 
-### Prerequisites
-- Node.js ≥ 18
-- Assignment-8 backend running locally (default `http://localhost:3000`)
-  - Must expose: `POST /auth/login`, `GET /user/getAll`
-
 ### How to run
 - unzip the file
-- open a terminal in assginment9 folder and run "npm run dev"
+- modify all .env files in the folder(one in the root and another under backend)
+- open a terminal in assginment10 folder and run "npm run dev"
+- open a terminal in backend folder under assignment10 folder and run dev
 
 ## Folder Structure
 - node_modules
@@ -19,11 +16,14 @@
   - components
     - navbar.jsx
     - protectedlayout.jsx
+    - roleRouter.jsx
   - context
     - authcontext.jsx
   - pages
-    - about, company gallery, contact, home, job listing: each folder has one .jsx to show its page
+    - admin, about, company gallery, contact, home, job listing: each folder has one .jsx to show its page
     - login.jsx: the login page which users will see at the first time
+  - store
+    - using Redux to store user info and easy to use later when fetching data
   - app.jsx
   - main.jsx
 - index.html
@@ -35,14 +35,15 @@
 - **Auth-gated app**: users must log in first, then access the main site (Home, About, Jobs, Contact, Company Showcase).
 - **Job Listings**: rendered on the front-end via a local `jobPosts` array.
 - **Company Showcase**: displays company cards; images are pulled from the Assignment-8 backend’s `/user/getAll`.
-- **Clean separation**: front-end (this repo) with a previously built **Node/Express/Mongo** backend (Assignment-8).
+- **Using Redux**: use redux for storing user info
+- **Following desing**: front-end (this repo) with a redesigned backend (Assignment8) with mongodb, nodejs, express.
 
 ---
 
 ## Tech Stack
 - **Frontend:** React + Vite, React Router v6, Axios  
 - **UI:** Material UI (pages), Bootstrap (optional for Navbar)  
-- **Backend (external):** Node.js + Express + MongoDB (Assignment-8)
+- **Backend (external):** Node.js + Express + MongoDB (Assignment8) + Redux
 
 ---
 
